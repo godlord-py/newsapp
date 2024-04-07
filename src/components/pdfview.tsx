@@ -11,10 +11,10 @@ interface PDFviewProps {
 
 function PDFview({ pdfFiles, onLoadSuccess }: PDFviewProps) {
   const maxScale = 1.8;
-  const minScale = 1;
+  const minScale = 0.2;
   const [numPages, setNumPages] = useState(null); 
   const [pageNumber, setPageNumber] = useState(1);
-  const [scale, setScale] = useState(2); // Initial scale
+  const [scale, setScale] = useState(1); // Initial scale
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -95,11 +95,7 @@ function PDFview({ pdfFiles, onLoadSuccess }: PDFviewProps) {
               onLoadError={onLoadError}
               options={options}
             >
-              {Array.from(new Array(numPages), (el, index) => (
-                <div key={`pdf-page-${index + 1}`} id={`pdf-page-${index + 1}`}>
-                  <Page pageNumber={index + 1} scale={scale} />
-                </div>
-              ))}
+              <Page pageNumber={pageNumber} scale={scale} />
             </Document>
           </div>
         </>

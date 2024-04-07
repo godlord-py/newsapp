@@ -10,15 +10,16 @@ import Hitavada from "/src/assets/Hitavada.jpg"
 import Navarashtra from "/src/assets/navarashtra.jpg"
 import Lokmat from "/src/assets/LOKMAT.jpg"
 import Hindustan from "/src/assets/Hindu Times.jpg"
+import Times from "/src/assets/ToI Delhi 07 Apr 2024.pdf"
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
 
 const newspapers = [
-  { id: 1, name: "Lokmat Times", imageUrl: Lokmat, pdfFilePath: "/src/assets/DAA 7th.pdf" },
-  { id: 2, name: "Hindustan Times", imageUrl: Hindustan, pdfFilePath: "/src/assets/WP 9 th.pdf" },
-  { id: 3, name: "Dainik Bhaskar", imageUrl: Dainik, pdfFilePath: "/path/to/newspaper3.pdf" },
-  { id: 4, name: "The Hitvada", imageUrl: Hitavada, pdfFilePath: "/path/to/newspaper3.pdf" },
-  { id: 5, name: "navarashtra", imageUrl: Navarashtra, pdfFilePath: "/path/to/newspaper3.pdf" },
+  { id: 1, name: "Lokmat Times", imageUrl: Lokmat, pdfFilePath: Times },
+  { id: 2, name: "Hindustan Times", imageUrl: Hindustan, pdfFilePath: Times },
+  { id: 3, name: "Dainik Bhaskar", imageUrl: Dainik, pdfFilePath: Times },
+  { id: 4, name: "The Hitvada", imageUrl: Hitavada, pdfFilePath: Times },
+  { id: 5, name: "navarashtra", imageUrl: Navarashtra, pdfFilePath: Times },
 ];
 
 const Pages = () => {
