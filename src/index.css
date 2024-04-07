@@ -26,3 +26,32 @@
 .slide {
   animation: slide 1s ease-out;
 }
+
+@media screen and (max-width: 600px){
+  .text1 {
+    margin-left: -9%;
+  }
+  .first {
+    margin-left: 40px;
+  }
+}
+
+
+@media (min-width: 1276px) {
+  .newspaper-image {
+    display: block;
+  }
+}
+@media (max-width: 1275px) {
+  .newspaper-image {
+    display: none;
+  }
+}
+@media screen and (max-width: 500px) {
+  .mobilepdf {
+    margin: auto;
+    width: 80%;
+    height: auto;
+    
+  }
+}

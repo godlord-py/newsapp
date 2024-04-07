@@ -29,8 +29,8 @@ const Pages = () => {
   };
 
   return (
-    <div className="first dark:bg-[#111010] min-h-screen relative">
-      <div className="dark:bg-[#111010] container mx-auto">
+    <div className="dark:bg-[#111010] min-h-screen relative">
+      <div className="first container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {newspapers.map((newspaper) => (
             <div
