@@ -32,17 +32,17 @@ const Pages = () => {
   return (
     <div className="dark:bg-[#111010] min-h-screen relative">
       <div className="first container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="mobilegrid w-11/12 grid grid-cols-1 md:grid-cols-3 gap-8">
           {newspapers.map((newspaper) => (
             <div
               key={newspaper.id}
               className="rounded-md overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105"
               onClick={() => handleNewspaperClick(newspaper)}
             >
-              <div className="p-4">
-              <h3 className="dark:text-white text-black text-xl text-center mr-20 font-semibold capitalize mt-4 transition-all duration-300 hover:text-blue-500 transform hover:scale-105">{newspaper.name}</h3>
+              <div className="">
+              <h3 className="dark:text-white text-black text-3xl py-2 text-center font-semibold capitalize mt-4 transition-all duration-300 dark:hover:text-blue-500 hover:text-blue-500 transform hover:scale-105">{newspaper.name}</h3>
               </div>
-              <img src={newspaper.imageUrl} alt={newspaper.name} className="w-3/4 h-auto" />
+              <img src={newspaper.imageUrl} alt={newspaper.name} className="w-full h-auto" />
             </div>
           ))}
         </div>
@@ -54,7 +54,7 @@ const Pages = () => {
 
 const PDFModal = ({ selectedNewspaper, onClose }) => {
   return (
-    <Modal
+    <Modal id="pdf-modal"
       isOpen={selectedNewspaper !== null}
       onRequestClose={onClose}
       contentLabel="PDF Modal"

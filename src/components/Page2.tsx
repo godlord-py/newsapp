@@ -15,7 +15,7 @@ const FirstPage = () => {
   };
 
   return (
-    <div className="dark:bg-[#111010] min-h-screen relative">
+    <div className="dark:bg-[#111010] w-full min-h-screen relative">
       <div className="text1 p-10 ml-16 mt-5 text-black font-bold dark:text-slate-200">#DAILY NEWS</div>
       <div className="p-3 font-bold mt-10 text-green-900 dark:text-red-600 text-6xl absolute" style={{ top: "25%", left: "12%", transform: "translate(-15%, -30%)" }}>
       <h1 className={`slide text-transparent ${theme === 'dark' ? 'dark:bg-gradient-to-r dark:from-yellow-500 dark:to-red-600' : 'bg-gradient-to-r from-red-600 to-blue-500'} bg-clip-text`}>

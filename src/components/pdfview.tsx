@@ -34,6 +34,8 @@ function PDFview({ pdfFiles, onLoadSuccess }: PDFviewProps) {
   useEffect(() => {
     if (window.innerWidth <= 500) {
       setScale(0.8); 
+    } else {
+      setScale(1); // Reset scale for larger screens
     }
   }, []);
 
@@ -76,7 +78,7 @@ function PDFview({ pdfFiles, onLoadSuccess }: PDFviewProps) {
   );
 
   return (
-    <div className='mobilepdf ml-20 w-1/2 max-w-screen'>
+    <div className='mobilepdf ml-20 w-full max-w-screen'>
       {pdfFiles && (
         <>
           <div>

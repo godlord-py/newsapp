@@ -1,0 +1,6 @@
+
+body {
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    touch-action: pan-y; /* Allow vertical scrolling only */
+  }
+  
