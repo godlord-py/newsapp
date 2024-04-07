@@ -5,16 +5,20 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import { RxCross2 } from "react-icons/rx";
 import PDFview from "./pdfview";
-import { heading } from "discord.js";
+import Dainik from "/src/assets/Dainik.jpg"
+import Hitavada from "/src/assets/Hitavada.jpg"
+import Navarashtra from "/src/assets/navarashtra.jpg"
+import Lokmat from "/src/assets/LOKMAT.jpg"
+import Hindustan from "/src/assets/Hindu Times.jpg"
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
 
 const newspapers = [
-  { id: 1, name: "Lokmat Times", imageUrl: "src/assets/LOKMAT.jpg", pdfFilePath: "/src/assets/DAA 7th.pdf" },
-  { id: 2, name: "Hindustan Times", imageUrl: "src/assets/Hindu Times.jpg", pdfFilePath: "/src/assets/WP 9 th.pdf" },
-  { id: 3, name: "Dainik Bhaskar", imageUrl: "src/assets/Dainik.jpg", pdfFilePath: "/path/to/newspaper3.pdf" },
-  { id: 4, name: "The Hitvada", imageUrl: "src/assets/Hitavada.jpg", pdfFilePath: "/path/to/newspaper3.pdf" },
-  { id: 5, name: "navarashtra", imageUrl: "src/assets/navarashtra.jpg", pdfFilePath: "/path/to/newspaper3.pdf" },
+  { id: 1, name: "Lokmat Times", imageUrl: Lokmat, pdfFilePath: "/src/assets/DAA 7th.pdf" },
+  { id: 2, name: "Hindustan Times", imageUrl: Hindustan, pdfFilePath: "/src/assets/WP 9 th.pdf" },
+  { id: 3, name: "Dainik Bhaskar", imageUrl: Dainik, pdfFilePath: "/path/to/newspaper3.pdf" },
+  { id: 4, name: "The Hitvada", imageUrl: Hitavada, pdfFilePath: "/path/to/newspaper3.pdf" },
+  { id: 5, name: "navarashtra", imageUrl: Navarashtra, pdfFilePath: "/path/to/newspaper3.pdf" },
 ];
 
 const Pages = () => {
