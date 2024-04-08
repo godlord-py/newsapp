@@ -6,7 +6,11 @@ import { ThemeContext } from "../context/theme";
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, setTheme } = useContext(ThemeContext);
-  const [enabled, setEnabled] = useState(theme === 'dark');
+  const [enabled, setEnabled] = useState(() => {
+    // Retrieve the switch state from localStorage, default to 'true' (dark mode) if not found
+    const storedState = localStorage.getItem('themeSwitchState');
+    return storedState ? JSON.parse(storedState) : true;
+  });
   const scrollTo = () => {
     window.scrollTo({
       top: 1000,

@@ -18,7 +18,7 @@ function PDFview({ pdfFiles, onLoadSuccess }: PDFviewProps) {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    // Update workerSrc to use the CDN URL
+    //fixed the version from 2.0.0 to 3.11.174
     pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
   
     return () => {
@@ -33,7 +33,7 @@ function PDFview({ pdfFiles, onLoadSuccess }: PDFviewProps) {
 
   useEffect(() => {
     if (window.innerWidth <= 500) {
-      setScale(0.8); 
+      setScale(0.4); 
     } else {
       setScale(1); // Reset scale for larger screens
     }
