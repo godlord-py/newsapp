@@ -11,14 +11,13 @@ interface PDFviewProps {
 
 function PDFview({ pdfFiles, onLoadSuccess }: PDFviewProps) {
   const maxScale = 1.8;
-  const minScale = 0.2;
+  const minScale = 0.2; 
   const [numPages, setNumPages] = useState(null); 
   const [pageNumber, setPageNumber] = useState(1);
-  const [scale, setScale] = useState(1); // Initial scale
+  const [scale, setScale] = useState(minScale); 
   const containerRef = useRef(null);
 
   useEffect(() => {
-    //fixed the version from 2.0.0 to 3.11.174
     pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
   
     return () => {
@@ -26,16 +25,15 @@ function PDFview({ pdfFiles, onLoadSuccess }: PDFviewProps) {
     };
   }, []);
   
-
   useEffect(() => {
     setPageNumber(1);
   }, [pdfFiles]);
 
   useEffect(() => {
     if (window.innerWidth <= 500) {
-      setScale(0.4); 
+      setScale(minScale); 
     } else {
-      setScale(1); // Reset scale for larger screens
+      setScale(0.75); 
     }
   }, []);
 
@@ -67,7 +65,7 @@ function PDFview({ pdfFiles, onLoadSuccess }: PDFviewProps) {
   };
 
   const handleZoomOut = () => {
-    setScale((prevScale) => Math.max(0.2, prevScale - 0.2, minScale));
+    setScale((prevScale) => Math.max(minScale, prevScale - 0.2));
   };
 
   const options = useMemo(
@@ -82,10 +80,11 @@ function PDFview({ pdfFiles, onLoadSuccess }: PDFviewProps) {
       {pdfFiles && (
         <>
           <div>
-            <Button onClick={handleZoomIn}>Zoom In</Button>
-            <Button onClick={handleZoomOut}>Zoom Out</Button>
+            <Button className='nextbutton' onClick={handleZoomIn}>Zoom In</Button>
+            <Button className='nextbutton' onClick={handleZoomOut}>Zoom Out</Button>
           </div>
           <Pagination
+          className='pagination'
             total={numPages || 1}
             initialPage={pageNumber}
             onChange={handlePageChange}
