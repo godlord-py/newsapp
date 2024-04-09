@@ -30,6 +30,19 @@ body {
   animation: slide 1s ease-out;
 }
 
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.infinite-scroll-container {
+  animation: scroll 20s linear infinite; 
+}
+
 @media screen and (max-width: 600px){
   .text1 {
     margin-left: -9%;
@@ -86,5 +99,11 @@ body {
   .pagination {
     padding: 10px;
     font-size: smaller;
+  }
+  .newssymbol {
+    position: absolute;
+    top: 77px;
+    left: 270px;
+    padding: 10px;
   }
 }

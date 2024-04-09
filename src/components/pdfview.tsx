@@ -10,7 +10,7 @@ interface PDFviewProps {
 }
 
 function PDFview({ pdfFiles, onLoadSuccess }: PDFviewProps) {
-  const maxScale = 1.8;
+  const maxScale = 1.4;
   const minScale = 0.2; 
   const [numPages, setNumPages] = useState(null); 
   const [pageNumber, setPageNumber] = useState(1);

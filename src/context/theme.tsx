@@ -1,6 +1,5 @@
 // themecontext.tsx
 import React, { createContext, useState, useEffect } from "react";
-
 interface ThemeContextProps {
   theme: string;
   setTheme: (color: string) => void;

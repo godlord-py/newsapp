@@ -1,15 +1,19 @@
 {
-    "compilerOptions": {
-      "jsx": "react",
-      "esModuleInterop": true,
-      "target": "es5",
-      "lib": ["dom", "dom.iterable", "esnext"],
-      "allowJs": true,
-      "skipLibCheck": true,
-      "strict": false,
-      "forceConsistentCasingInFileNames": true,
-      "noFallthroughCasesInSwitch": true
-    },
-    "include": ["src"]
-  }
-  
+  "compilerOptions": {
+    "jsx": "react",
+    "esModuleInterop": true,
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true, 
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "downlevelIteration": true,
+    "allowImportingTsExtensions": true,
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "env.d.ts"]
+}
