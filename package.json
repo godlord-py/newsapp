@@ -19,6 +19,8 @@
     "@react-pdf/renderer": "^3.4.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.4",
+    "aos": "^2.3.4",
+    "express": "^4.19.2",
     "framer-motion": "^11.0.24",
     "pdfjs": "^2.5.3",
     "pdfjs-dist": "^4.0.379",
@@ -27,7 +29,9 @@
     "react-icons": "^5.0.1",
     "react-modal": "^3.16.1",
     "react-pdf": "^7.7.1",
+    "react-resizable": "^3.0.5",
     "react-router-dom": "^6.22.3",
+    "react-tilt": "^1.0.2",
     "typescript": "^5.4.4"
   },
   "devDependencies": {

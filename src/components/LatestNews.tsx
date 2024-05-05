@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from '../layouts/Navbar';
 import VITE_NEWS_API_KEY from '/home/godlord/news/newsapp/.env';
+
 const NewsFeed: React.FC = () => {
   const [newsData, setNewsData] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -39,13 +40,14 @@ const NewsFeed: React.FC = () => {
   };
 
   // Get unique news source names for dropdown options
-  const newsSources = [...new Set(newsData.map(article => article.source.name))];
+  const newsSources = newsData ? [...new Set(newsData.map(article => article.source.name))] : [];
   
   // Filter news based on search term and selected source
-  const filteredNews = newsData.filter(article =>
+  const filteredNews = newsData ? newsData.filter(article =>
     article.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (filterBySource === '' || article.source.name.toLowerCase() === filterBySource.toLowerCase())
-  );
+) : [];
+
 
   return (
     <>

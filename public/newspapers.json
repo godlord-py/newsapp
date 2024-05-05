@@ -1,0 +1,55 @@
+{
+  "newspapers": [
+    {
+      "id": 1,
+      "name": "Lokmat Times",
+      "type": "newspaper",
+      "imageUrl": "./assets/LOKMAT.jpg",
+      "dates": ["2024-04-07", "2024-04-08", "2024-04-09", "2024-04-10", "2024-04-11", "2024-04-12"],
+      "pdfFiles": [
+        { "date": "2024-04-07", "path": "public/DAA.pdf" },
+        { "date": "2024-04-08", "path": "./public/PDF.pdf" },
+        { "date": "2024-04-09", "path": "/public/PDF.pdf" },
+        { "date": "2024-04-10", "path": "/assets/PDF.pdf" },
+        { "date": "2024-04-11", "path": "assets/PDF.pdf" },
+        { "date": "2024-04-12", "path": "/PDF.pdf" },
+        { "date": "2024-04-12", "path": "/DAA.pdf" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Hindustan Times",
+      "type": "newspaper",
+      "imageUrl": "assets/Hindu Times.jpg",
+      "dates": ["2024-04-07"],
+      "pdfFiles": [
+        { "date": "2024-04-07", "path": "/src/assets/ToI Delhi 07 Apr 2024.pdf" },
+        { "date": "2024-04-08", "path": "/src/assets/ToI Delhi 07 Apr 2024.pdf" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Maharashtra Times",
+      "type": "newspaper",
+      "imageUrl": "dist/Marathi.jpg",
+      "dates": ["2024-04-07"],
+      "pdfFiles": [
+        { "date": "2024-04-07", "path": "/src/assets/ToI Delhi 07 Apr 2024.pdf" },
+        { "date": "2024-04-08", "path": "/src/assets/ToI Delhi 07 Apr 2024.pdf" }
+      ]
+    }
+  ],
+  "magazines": [
+    {
+      "id": 4,
+      "name": "Magazine Example",
+      "type": "magazine",
+      "imageUrl": "./dist/Marathi.jpg",
+      "dates": ["2024-04-07"],
+      "pdfFiles": [
+        { "date": "2024-04-07", "path": "./src/assets/ToI Delhi 07 Apr 2024.pdf" },
+        { "date": "2024-04-08", "path": "/src/assets/ToI Delhi 07 Apr 2024.pdf" }
+      ]
+    }
+  ]
+}

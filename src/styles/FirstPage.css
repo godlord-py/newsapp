@@ -1,0 +1,56 @@
+.dark .blurup {
+    position: absolute;
+    width: 50vw;
+    height: 50vw;
+    min-width: 350px;
+    min-width: 350px;
+    top: -128px;
+    left: -20vw;
+    border-radius: 764px;
+    background: rgba(27, 24, 84, 0.7);
+    filter: blur(100px);
+    z-index: 0;
+    animation: blurAnimation 4s ease-in-out infinite; 
+  }
+
+  /* .blurup {
+    position: absolute;
+    width: 50vw;
+    height: 50vw;
+    min-width: 350px;
+    min-width: 350px;
+    top: -128px;
+    left: -20vw;
+    border-radius: 764px;
+    background: rgba(171, 252, 204, 0.7);
+    filter: blur(100px);
+    z-index: 0;
+    animation: blurAnimationlight 2s ease-in-out infinite;
+  } */
+
+  .dark .blurdown {
+    position: absolute;
+    width: 40vw;
+    height: 40vw;
+    min-width: 3px;
+    min-width: 2px;
+    top: -250px;
+    right: -20vw;
+    border-radius: 764px;
+    filter: blur(100px);
+    z-index: 10;
+    animation: blurAnimation 4s ease-in-out infinite; 
+  }
+
+  @keyframes blurAnimation {
+    0% { filter: blur(50px); }
+    50% { filter: blur(120px); }
+    100% { filter: blur(50px); }
+}
+
+
+@keyframes blurAnimationlight {
+  0% { filter: blur(30px); }
+  50% { filter: blur(150px); }
+  100% { filter: blur(50px); }
+}

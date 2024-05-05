@@ -17,7 +17,7 @@ body {
 
 @keyframes slide {
   from {
-    transform: translateX(-100%);
+    transform: translateX(-60%);
     filter: brightness(0.5), blur(10px);
   }
   to {
@@ -99,7 +99,7 @@ body {
   .pagination {
     padding: 10px;
     font-size: smaller;
-  }
+  }                                     
   .newssymbol {
     position: absolute;
     top: 77px;
