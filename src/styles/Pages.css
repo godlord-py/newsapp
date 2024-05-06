@@ -1,0 +1,23 @@
+#cross-button {
+    transition: all 0.3s ease-in-out;
+    z-index: 20;
+  }
+  
+  #cross-button.floating {
+    position: fixed;
+    top: 20px; 
+    right: 20px; 
+    z-index: 20;
+  }
+  
+  .zoom-buttons {
+    position: fixed;
+    top: 5%;
+    left: 40%; 
+    transform: translateY(-50%);
+    z-index: 999;
+  }
+  
+  .zoom-buttons.hide {
+    opacity: 0;
+  }

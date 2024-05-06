@@ -7,6 +7,7 @@ import "aos/dist/aos.css";
 import AOS from "aos";
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import '/src/styles/Pages.css'; 
 
 const Pages = () => {
   const [selectedPublication, setSelectedPublication] = useState(null);
@@ -15,6 +16,7 @@ const Pages = () => {
   const [selectedType, setSelectedType] = useState("All");
   const [publications, setPublications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [scrolled, setScrolled] = useState(false); // New state variable to track scrolling
 
   useEffect(() => {
     fetchPublications();
@@ -22,7 +24,21 @@ const Pages = () => {
       duration: 1000,
       once: false,
     });
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  const handleScroll = () => {
+    if (window.pageYOffset > 100) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
 
   const fetchPublications = async () => {
     try {
@@ -135,10 +151,11 @@ const Pages = () => {
             </div>
           </div>
           {selectedPublication && (
-            <div className="mobilepdf fixed top-0 left-0 w-full h-full bg-white z-50 overflow-y-scroll">
+            <div className={`mobilepdf fixed top-0 left-0 w-full h-full bg-white z-50 overflow-y-scroll ${scrolled ? 'scrolled' : ''}`}>
               <button
+                id="cross-button"
                 onClick={() => setSelectedPublication(null)}
-                className="absolute top-8 right-10 bg-gray-200 hover:bg-gray-300 rounded-full text-red-600 text-3xl px-3 py-2"
+                className={`absolute top-8 right-10 bg-gray-200 hover:bg-gray-300 rounded-full text-red-600 text-3xl px-3 py-2 ${scrolled ? 'floating' : ''}`}
               >
                 <RxCross2 />
               </button>
@@ -168,6 +185,7 @@ const Pages = () => {
                     (file) => file.date === selectedDate
                   ) ? (
                     <PDFview
+                    onLoadSuccess={undefined}
                       pdfFiles={selectedPublication.pdfFiles.find(
                         (file) => file.date === selectedDate
                       ).path}
