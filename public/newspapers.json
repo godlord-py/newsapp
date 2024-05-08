@@ -4,51 +4,120 @@
       "id": 1,
       "name": "Lokmat Times",
       "type": "newspaper",
-      "imageUrl": "LOKMAT.jpg",
-      "dates": ["2024-04-07", "2024-04-08", "2024-04-09", "2024-04-10", "2024-04-11", "2024-04-12", "2024-04-13"],
+      "imageUrl": "newspaper image/LOKMAT.webp",
+      "dates": ["2024-05-08", "2024-04-09"],
       "pdfFiles": [
-        { "date": "2024-04-07", "path": "DAA.pdf" },
-        { "date": "2024-04-08", "path": "PDF.pdf" },
-        { "date": "2024-04-09", "path": "PDF.pdf" },
-        { "date": "2024-04-10", "path": "PDF.pdf" },
-        { "date": "2024-04-11", "path": "PDF.pdf" },
-        { "date": "2024-04-12", "path": "PDF.pdf" },
-        { "date": "2024-04-12", "path": "DAA.pdf" }
+        { "date": "2024-05-08", "path": "/newspapers/8/5/24/DC Chennai 08.05.2024.pdf" }
+      ]
+    },
+
+    {
+      "id": 4.2,
+      "name" : "The Tribune",
+      "type": "newspaper",
+      "imageUrl": "/newspaper image/Tribune.webp",
+      "dates": ["2024-05-08"],
+      "pdfFiles": [
+        { "date": "2024-04-07", "path": "/newspapers/DAA.pdf"  },
+        { "date": "2024-05-08", "path": "/newspapers/8/5/24/Tribune Chandigarh 08.05.2024.pdf"  }
+      ]
+    },
+
+   
+    {
+      "id": 5,
+      "name": "The New INDIAN EXPRESS",
+      "type": "newspaper",
+      "imageUrl": "/newspaper image/NewIndianExpress.webp",
+      "dates": ["2024-05-08", "2024-05-09"],
+      "pdfFiles": [
+        {"date": "2024-05-08", "path": "/newspapers/8/5/24/NIE Chennai 08.05.2024.pdf"  }
+      ]  
+    },
+    {
+      "id": 6,
+      "name": "Chandigarh Tribune",
+      "type": "newspaper",
+      "imageUrl": "/newspaper image/ChandigarhTribune.webp",
+      "dates": ["2024-05-08"],
+      "pdfFiles": [
+        { "date": "2024-05-08", "path": "/newspapers/8/5/24/Tribune Chandigarh Supplement 08.05.2024.pdf"  }
       ]
     },
     {
-      "id": 2,
-      "name": "Hindustan Times",
+      "id": 7,
+      "name": "Bombay Times",
       "type": "newspaper",
-      "imageUrl": "Hindu Times.jpg",
-      "dates": ["2024-04-07", "2024-04-09"],
+      "imageUrl": "/newspaper image/BombayTimes.webp",
+      "dates": ["2024-05-08"],
       "pdfFiles": [
-        { "date": "2024-04-07", "path": "DAA.pdf"  },
-        { "date": "2024-04-08", "path": "DAA.pdf"  }
+        { "date": "2024-05-08", "path": "/newspapers/8/5/24/ToI Mumbai Times 08.05.2024.pdf"  }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Kolkata Times",
+      "type": "newspaper",
+      "imageUrl": "/newspaper image/KolkataTimes.webp",
+      "dates": ["2024-05-08"],
+      "pdfFiles": [
+        { "date": "2024-05-08", "path": "/newspapers/8/5/24/ToI Kolkata Times 08.05.2024.pdf"  }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Deccan Chronicle",
+      "type": "newspaper",
+      "imageUrl": "/newspaper image/deccan-chronicle.webp",
+      "dates": ["2024-05-08"],
+      "pdfFiles": [
+        { "date": "2024-05-08", "path": "/newspapers/8/5/24/DC Chennai 08.05.2024.pdf"  }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "The Goan",
+      "type": "newspaper",
+      "imageUrl": "/newspaper image/TheGoan.webp",
+      "dates": ["2024-05-08"],
+      "pdfFiles": [
+        { "date": "2024-05-08", "path": "/newspapers/8/5/24/The Goan 08.05.2024🌡️.pdf"  }
       ]
     },
     {
       "id": 3,
       "name": "Maharashtra Times",
       "type": "newspaper",
-      "imageUrl": "Marathi.jpg",
-      "dates": ["2024-04-07", "2024-04-08"],
+      "imageUrl": "/newspaper image/Marathi.webp",
+      "dates": ["2024-05-08"],
       "pdfFiles": [
-        { "date": "2024-04-07", "path": "DAA.pdf"  },
-        { "date": "2024-04-08", "path": "DAA.pdf"  }
+        { "date": "2024-04-07", "path": "/newspapers/DAA.pdf"  },
+        { "date": "2024-05-08" }
+      ]
+    },
+
+    {
+      "id": 2,
+      "name": "Hindustan Times",
+      "type": "newspaper",
+      "imageUrl": "/newspaper image/Hindu Times.webp",
+      "dates": ["2024-05-08"],
+      "pdfFiles": [
+        { "date": "2024-05-08", "path": "/newspapers/DAA.pdf"  }
       ]
     }
   ],
+
+
   "magazines": [
     {
       "id": 4,
       "name": "Magazine Example 1",
       "type": "magazine",
-      "imageUrl": "Marathi.jpg",
-      "dates": ["2024-04-07", "2024-04-08", "2024-04-09", "2024-04-10"],
+      "imageUrl": "/newspaper image/Marathi.webp",
+      "dates": ["2024-05-08"],
       "pdfFiles": [
-        { "date": "2024-04-07", "path": "DAA.pdf"  },
-        { "date": "2024-04-08", "path": "DAA.pdf"  }
+        { "date": "2024-0-08", "path": "/newspapers/8/5/24/The Goan 08.05.2024🌡️.pdf"  }
       ]
     }
   ]

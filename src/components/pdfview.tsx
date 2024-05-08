@@ -1,10 +1,11 @@
+// Import necessary libraries
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Pagination, Button } from '@nextui-org/react';
 import { CircularProgress } from '@nextui-org/react';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import '/home/godlord/news/newsapp/src/styles/Pages.css'; // Import CSS file for custom styles
+import '/home/godlord/news/newsapp/src/styles/Pages.css'; 
 
 const PDFview = ({ pdfFiles, onLoadSuccess }) => {
   const maxScale = 1.4;
@@ -17,6 +18,9 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
   const pagesRef = useRef({});
   const scrollPositions = useRef({});
   const [hideButtons, setHideButtons] = useState(false);
+
+  // Lazy loading and caching
+  const [loadedPages, setLoadedPages] = useState({});
 
   useEffect(() => {
     pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
@@ -81,11 +85,15 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
   };
 
   const handleZoomIn = () => {
+    setLoading(true); // Set loading to true while zooming
     setScale((prevScale) => Math.min(prevScale + 0.2, maxScale));
+    setTimeout(() => setLoading(false), 1200);
   };
-
+  
   const handleZoomOut = () => {
+    setLoading(true); // Set loading to true while zooming
     setScale((prevScale) => Math.max(minScale, prevScale - 0.2));
+    setTimeout(() => setLoading(false), 1200); 
   };
 
   const handleScroll = (e) => {
@@ -108,12 +116,26 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
   };
 
   const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const publicationContainer = document.querySelector('.mobilepdf'); // Select the container element
+  
+    if (publicationContainer) {
+      if (!pdfFiles) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        publicationContainer.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to the top of the container
+      }
+    }
   };
-
+  
   return (
     <div className='mobilepdf ml-20 w-full max-w-screen'>
-      {loading && <CircularProgress className='ml-96' />} 
+     {loading && (
+        <div className="flex flex-col ml-60 justify-center items-center h-screen">
+          <CircularProgress className='justify-center text-center' />
+          <p className="mt-4 text-xl font-semibold text-gray-600">Paper is loading...</p>
+        </div>
+      )}
+
       {pdfFiles && (
         <>
           <div className={`zoom-buttons ${hideButtons ? 'hide' : ''}`}>
@@ -144,7 +166,7 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
               ))}
             </Document>
           </div>
-          <Button className='nextbutton' onClick={handleScrollToTop}>Back to Top</Button>
+          <Button className='mobilepdf nextbutton' onClick={handleScrollToTop}>Back to Top</Button>
         </>
       )}
     </div>

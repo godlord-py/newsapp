@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { BiSolidNews } from "react-icons/bi";
 import { MdOutlineDynamicFeed } from "react-icons/md";
@@ -84,6 +84,15 @@ const Pages = () => {
 
   const dates = selectedPublication ? selectedPublication.dates : [];
 
+  
+  // Use a ref to access the container where the publication content is displayed
+  const publicationContainerRef = useRef(null);
+
+  const handleCrossButtonClick = () => {
+    // Scroll the container to the top
+    publicationContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    setSelectedPublication(null);
+  };
   return (
     <>
       {loading ? (
@@ -96,7 +105,7 @@ const Pages = () => {
             data-aos-duration="1000"
             className="first container mx-auto flex flex-wrap"
           >
-            <div className="flex-direction">
+            <div className="mobilesearch flex-direction">
               <span className="flex mb-2 mr-10 font-semibold">
                 <BiSolidNews className="mr-2 text-2xl" />
                 Filter by Type
@@ -111,7 +120,7 @@ const Pages = () => {
                 <option value="magazine">Magazines</option>
               </select>
             </div>
-            <div className="mb-10 flex-direction">
+            <div className="mobilesearch mb-10 flex-direction">
               <span className="flex mb-2 font-semibold">
                 <MdOutlineDynamicFeed className="mr-2 text-2xl" />
                 Filter by Name
@@ -151,13 +160,13 @@ const Pages = () => {
             </div>
           </div>
           {selectedPublication && (
-            <div className={`mobilepdf fixed top-0 left-0 w-full h-full bg-white z-50 overflow-y-scroll ${scrolled ? 'scrolled' : ''}`}>
-              <button
-                id="cross-button"
-                onClick={() => setSelectedPublication(null)}
-                className={`absolute top-8 right-10 bg-gray-200 hover:bg-gray-300 rounded-full text-red-600 text-3xl px-3 py-2 ${scrolled ? 'floating' : ''}`}
-              >
-                <RxCross2 />
+              <div ref={publicationContainerRef} className={`mobilepdf fixed top-0 left-0 w-full h-full bg-white z-50 overflow-y-scroll ${scrolled ? 'scrolled' : ''}`}>
+                <button
+                  id="cross-button"
+                  onClick={handleCrossButtonClick}
+                  className={`absolute top-8 right-10 bg-gray-300 hover:bg-gray-200 rounded-full text-red-600 text-3xl px-3 py-2 ${scrolled ? 'floating' : ''}`}
+                >
+                  <RxCross2 />
               </button>
               <div className="max-w-screen-lg py-8">
                 <div className="mb-4">

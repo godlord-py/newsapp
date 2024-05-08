@@ -54,3 +54,21 @@
   50% { filter: blur(150px); }
   100% { filter: blur(50px); }
 }
+
+/* MOBILE */
+@media screen and (max-width: 600px) {
+  .dark .blurup {
+    position: absolute;
+    width: 90vw; 
+    height: 90vw; 
+    min-width: 280px; 
+    min-height: 280px; 
+    top: 90px; 
+    left: -20vw; 
+    border-radius: 382px; 
+    background: rgba(31, 27, 99, 0.7);
+    filter: blur(100px);
+    z-index: 0;
+    animation: blurAnimation 4s ease-in-out infinite; 
+  }
+}
