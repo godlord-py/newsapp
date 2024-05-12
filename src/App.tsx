@@ -1,9 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext} from 'react';
 import './App.css';
-import Pages from './components/NewsPage';
-import NavBar from './layouts/Navbar';
 import { ThemeContext } from './context/theme';
-import Page2 from './components/FirstPage';
 import router from './routes/routes';
 import { RouterProvider } from 'react-router-dom';
 import VisitedSites from './components/cache'; // Import VisitedSites component
@@ -33,8 +30,7 @@ function App() {
         }`}
       >
         <RouterProvider router={router} />
-        {/* Pass the addVisitedSite function as a prop to the VisitedSites component */}
-        <VisitedSites addVisitedSite={addVisitedSite} />
+
       </div>
     </>
   );

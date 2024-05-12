@@ -12,12 +12,38 @@
   
   .zoom-buttons {
     position: fixed;
-    top: 5%;
+    top: 4.8%;
     left: 40%; 
     transform: translateY(-50%);
-    z-index: 999;
+    z-index: 1000;
   }
   
   .zoom-buttons.hide {
     opacity: 0;
   }
+
+  .mobilezoom-buttons{
+    position: fixed;
+    top: 50px; 
+    left: 120px; 
+     
+  }
+  .nextbutton {
+    /* Add your button styles here */
+    padding: 8px 16px;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .nextbutton:hover {
+    background-color: #45a049;
+  }
+  

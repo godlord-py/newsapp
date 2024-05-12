@@ -1,0 +1,25 @@
+.newspaper-skeleton {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 20px;
+    background-color: rgb(234, 234, 234)
+  }
+  
+  .header-skeleton {
+    margin-bottom: 20px;
+  }
+  
+  .main-content-skeleton {
+    display: flex;
+  }
+  
+  .news-article-skeleton {
+    flex: 2;
+  }
+  
+  .sidebar-skeleton {
+    flex: 1;
+    margin-left: 20px;
+  }
+  

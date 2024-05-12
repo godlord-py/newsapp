@@ -8,6 +8,7 @@ import AOS from "aos";
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import '/src/styles/Pages.css'; 
+import PDFViewer from "./PDFviewer";
 
 const Pages = () => {
   const [selectedPublication, setSelectedPublication] = useState(null);
@@ -16,7 +17,8 @@ const Pages = () => {
   const [selectedType, setSelectedType] = useState("All");
   const [publications, setPublications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [scrolled, setScrolled] = useState(false); // New state variable to track scrolling
+  const [scrolled, setScrolled] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
     fetchPublications();
@@ -38,6 +40,10 @@ const Pages = () => {
     } else {
       setScrolled(false);
     }
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   const fetchPublications = async () => {
@@ -71,11 +77,11 @@ const Pages = () => {
   };
 
   const filteredPublications =
-  selectedType === "All"
-    ? publications
-    : selectedType === "newspaper"
-    ? publications.filter((item) => item.type === "newspaper")
-    : publications.filter((item) => item.type === "magazine");
+    selectedType === "All"
+      ? publications
+      : selectedType === "newspaper"
+      ? publications.filter((item) => item.type === "newspaper")
+      : publications.filter((item) => item.type === "magazine");
 
   const filteredNames =
     selectedName === "All"
@@ -84,15 +90,13 @@ const Pages = () => {
 
   const dates = selectedPublication ? selectedPublication.dates : [];
 
-  
-  // Use a ref to access the container where the publication content is displayed
   const publicationContainerRef = useRef(null);
 
   const handleCrossButtonClick = () => {
-    // Scroll the container to the top
     publicationContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     setSelectedPublication(null);
   };
+
   return (
     <>
       {loading ? (
@@ -113,7 +117,7 @@ const Pages = () => {
               <select
                 value={selectedType}
                 onChange={handleTypeChange}
-                className="w-40 mr-10 p-2 border-2 border-gray-400 rounded-xl"
+                className="w-60 mr-10 p-2 border-2 border-gray-400 rounded-xl"
               >
                 <option value="All">All Types</option>
                 <option value="newspaper">Newspapers</option>
@@ -128,7 +132,7 @@ const Pages = () => {
               <select
                 value={selectedName}
                 onChange={handleNameChange}
-                className="w-40 p-2 border-2 border-gray-400 rounded-xl"
+                className="searchname w-60 p-2 border-2 border-gray-400 rounded-xl"
               >
                 <option value="All">All Names</option>
                 {filteredPublications.map((item) => (
@@ -138,85 +142,35 @@ const Pages = () => {
                 ))}
               </select>
             </div>
-            <div className="mobilegrid w-11/12 ml-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="mobilegrid w-11/12 ml-4 grid grid-cols-1 md:grid-cols-4 gap-8">
               {filteredNames.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-md overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105"
+                  className="rounded-md overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105 bg-white bg-opacity-20 dark:bg-gray-800 dark:bg-opacity-50 backdrop-filter backdrop-blur-lg"
                   onClick={() => handlePublicationClick(item)}
                 >
-                  <div className="">
-                    <h3 className="dark:text-white text-black text-3xl py-2 text-center font-semibold capitalize mt-4 transition-all duration-300 dark:hover:text-blue-500 hover:text-blue-500 transform hover:scale-105">
-                      {item.name}
-                    </h3>
-                  </div>
-                  <img
-                    src={item.imageUrl}
-                    alt={item.name}
-                    className="w-full h-auto"
-                  />
+                  <h3 className="p-4 text-3xl text-center font-semibold capitalize transition-all duration-300 text-gray-800 dark:text-white hover:text-blue-500 transform hover:scale-105">
+                    {item.name}
+                  </h3>
+                  <img src={item.imageUrl} alt={item.name} className="w-full h-auto" />
                 </div>
               ))}
             </div>
           </div>
+          {/* PDF UI */}
+          
           {selectedPublication && (
-              <div ref={publicationContainerRef} className={`mobilepdf fixed top-0 left-0 w-full h-full bg-white z-50 overflow-y-scroll ${scrolled ? 'scrolled' : ''}`}>
-                <button
-                  id="cross-button"
-                  onClick={handleCrossButtonClick}
-                  className={`absolute top-8 right-10 bg-gray-300 hover:bg-gray-200 rounded-full text-red-600 text-3xl px-3 py-2 ${scrolled ? 'floating' : ''}`}
-                >
-                  <RxCross2 />
-              </button>
-              <div className="max-w-screen-lg py-8">
-                <div className="mb-4">
-                  <span className="mr-2 ml-4 text-black font-semibold">
-                    Filter by Date:
-                  </span>
-                  <select
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    className="w-3/2 p-2 ml-2 border-2 border-gray-400 rounded-xl"
-                  >
-                    <option value="">Select Date</option>
-                    {dates.map((date, index) => (
-                      <option key={index} value={date}>
-                        {date}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <h3 className="text-3xl text-black ml-3 font-semibold mb-4">
-                  {selectedPublication.name}
-                </h3>
-                {selectedDate ? (
-                  selectedPublication.pdfFiles.find(
-                    (file) => file.date === selectedDate
-                  ) ? (
-                    <PDFview
-                    onLoadSuccess={undefined}
-                      pdfFiles={selectedPublication.pdfFiles.find(
-                        (file) => file.date === selectedDate
-                      ).path}
-                    />
-                  ) : (
-                    <p className="text-4xl ml-96 text-black font-serif text-center">
-                      ⚫No publication available for the selected date, Stay
-                      Tuned.
-                    </p>
-                  )
-                ) : (
-                  <p className="text-4xl ml-96 text-black font-serif text-center">
-                    ⚫Please select a date.
-                  </p>
-                )}
-              </div>
-            </div>
+            <PDFViewer
+              selectedPublication={selectedPublication}
+              onClose={() => setSelectedPublication(null)}
+              scrolled={scrolled}
+            />
           )}
         </div>
-      )}
-    </>
-  );
-};
+            )}
+          </>
+        );
+      };
 
 export default Pages;
+ 
