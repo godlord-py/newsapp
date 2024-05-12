@@ -6,7 +6,7 @@ import { FcNews } from "react-icons/fc";
 import NavBar from "../layouts/Navbar";
 import "/home/godlord/news/newsapp/src/styles/FirstPage.css";
 import { AiOutlineArrowDown } from "react-icons/ai";
-import { ToastContainer, toast } from "react-toastify";
+
 
 const FirstPage = () => {
   const [imagePosition, setImagePosition] = useState("top-16");
@@ -18,22 +18,6 @@ const FirstPage = () => {
       behavior: 'smooth'
     });
   };
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     toast.info('Use the filter to navigate through different newspapers & dates easily.', {
-  //       position: 'top-right',
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //     });
-  //   }, 5000); 
-
-  //   return () => clearTimeout(timer);
-  // }, []);
-
   return (
     <>
     <NavBar/>
@@ -42,7 +26,7 @@ const FirstPage = () => {
       
       <div className="text1 p-10 ml-14 mt-1 text-black font-bold dark:text-slate-200">#DAILY NEWS</div>
       <div className="p-3 font-bold mt-10 text-green-900 dark:text-red-600 text-6xl absolute" style={{ top: "28%", left: "12%", transform: "translate(-15%, -30%)" }}>
-        <h1 className={`flex slide text-transparent ${theme === 'dark' ? 'dark:bg-gradient-to-r dark:from-yellow-500 dark:to-red-600' : 'bg-gradient-to-r from-red-600 to-blue-500'} bg-clip-text`}>
+        <h1 className={`HeadingText flex slide text-transparent bg-clip-text bg-cover bg-center ${theme === 'light' ? 'bg-gradient-to-r from-red-600 to-blue-500': 'bg-gradient-to-r from-red-600 to-blue-500'}`}>
           Latest<br />
           News Headlines <FcNews className="newssymbol mt-16 ml-4 text-black dark:text-white" />
         </h1>
