@@ -30,13 +30,11 @@
   }
   .nextbutton {
     /* Add your button styles here */
-    padding: 8px 16px;
-    background-color: #4CAF50; /* Green */
+    padding: 10px 20px;
+    background-color: #346bd8; /* Green */
     border: none;
     color: white;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
@@ -46,4 +44,5 @@
   .nextbutton:hover {
     background-color: #45a049;
   }
+
   

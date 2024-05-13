@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { BiSolidNews } from "react-icons/bi";
 import { MdOutlineDynamicFeed } from "react-icons/md";
-import PDFview from "./pdfview";
+import PDFview from "./pdfrender";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import "react-pdf/dist/Page/AnnotationLayer.css";
@@ -155,10 +155,10 @@ const Pages = () => {
                 {filteredNames.map((item) => (
                   <div
                     key={item.id}
-                    className="rounded-md overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105 bg-white bg-opacity-20 dark:bg-gray-800 dark:bg-opacity-50 backdrop-filter backdrop-blur-lg"
+                    className="rounded-md overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105 bg-gray-300 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 backdrop-filter backdrop-blur-lg"
                     onClick={() => handlePublicationClick(item)}
                   >
-                    <h3 className="p-4 text-3xl text-center font-semibold capitalize transition-all duration-300 text-gray-800 dark:text-white hover:text-blue-500 transform hover:scale-105">
+                    <h3 className="p-4 text-lg sm:text-3xl text-center font-semibold capitalize transition-all duration-300 text-gray-800 dark:text-white hover:text-blue-500 transform hover:scale-105">
                       {item.name}
                     </h3>
                     <img

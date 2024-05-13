@@ -155,15 +155,16 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
           <p className="mt-4 text-xl font-semibold text-gray-600">Paper is loading...</p>
         </div>
       )}
+      {/* MOBILE UI */}
         {isMobile && (
            <>
                <div className="mobilezoom-buttons" style={{ zIndex: 1001 }}>
               <button className='nextbutton m-2' onClick={handleMZoomIn}>Zoom In</button>
-              <button className='nextbutton' onClick={handleMZoomOut}>Zoom Out</button>
+              <button className='nextbutton p-4' onClick={handleMZoomOut}>Zoom Out</button>
             </div>
 
         <Document
-          file={pdfFiles}
+          file={decodeURIComponent(pdfFiles)}
           onLoadSuccess={onDocumentLoadSuccess}
           onLoadError={onLoadError}
           options={options}

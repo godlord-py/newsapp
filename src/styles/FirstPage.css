@@ -44,9 +44,7 @@
 .dark .HeadingText {
   background-image: url("https://blog.newspapers.com/wp-content/uploads/2024/04/Washington_Times-1170x606.jpg");
 }
-.HeadingText {
-  background-image: url("https://th.bing.com/th/id/OIG3.kD8uW94vTRTRiTN3HnFF?w=1024&h=1024&rs=1&pid=ImgDetMain");
-}
+
 
   @keyframes blurAnimation {
     0% { filter: blur(50px); }

@@ -6,7 +6,7 @@ import { FcNews } from "react-icons/fc";
 import NavBar from "../layouts/Navbar";
 import "/home/godlord/news/newsapp/src/styles/FirstPage.css";
 import { AiOutlineArrowDown } from "react-icons/ai";
-
+import Separators from "./UI/seperator";
 
 const FirstPage = () => {
   const [imagePosition, setImagePosition] = useState("top-16");
@@ -30,12 +30,13 @@ const FirstPage = () => {
           Latest<br />
           News Headlines <FcNews className="newssymbol mt-16 ml-4 text-black dark:text-white" />
         </h1>
-        <p className="p-3 text-lg sm:text-xl mt-4 text-gray-800 dark:text-slate-300">
-          Stay updated with the latest news and happenings around the world.<br />Get access to breaking news, in-depth analysis, and exclusive stories.
-        </p>
+ 
+          <Separators />
+        
         <button onClick={scrollTo} className="flex mt-10 p-2 text-white bg-green-600 text-xl px-6 py-3 rounded-full hover:bg-blue-600 dark:bg-[#111010] dark:border-4 dark:hover:bg-blue-600 transition-transform hover:scale-1">
           Read Now  <AiOutlineArrowDown className="m-1 text-2xl"/>
         </button>
+    
       </div>
       
       <div className="infinite-scroll-container absolute mb-20 top-0 left-0 w-full h-11/12 overflow-hidden hidden md:block">
@@ -48,9 +49,10 @@ const FirstPage = () => {
         src={NewspaperImage}
         className={`newspaper-image absolute mt-10 right-32 w-1/4 h-3/5 object-cover z-20 top-14 mr-20 rounded-lg shadow-md transition-transform hover:scale-105`} />
    <div className="blurdown"></div>
-   {/* {!isMobile && <ToastContainer />} */}
     </div></>
   );
 };
 
 export default FirstPage;
+
+

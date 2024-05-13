@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
-import PDFview from './pdfview';
+import PDFview from './pdfrender';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 

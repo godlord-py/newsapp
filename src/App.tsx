@@ -4,6 +4,8 @@ import { ThemeContext } from './context/theme';
 import router from './routes/routes';
 import { RouterProvider } from 'react-router-dom';
 import VisitedSites from './components/cache'; // Import VisitedSites component
+import Footer from './components/footer';
+
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -29,8 +31,8 @@ function App() {
           theme === "dark" ? "dark" : ""
         }`}
       >
-        <RouterProvider router={router} />
-        
+        <RouterProvider router={router} />  
+        <Footer/>  
       </div>
     </>
   );

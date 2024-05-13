@@ -6,6 +6,7 @@ import PDFViewer from '../components/PDFviewer';
 import NotFound from '../components/NotFound';
 
 const router = createBrowserRouter([
+
   {
     path: '/',
     element: (
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
         <Pages />
       </>
     ),
+  },
+  {
+    path: '/pages',
+    element: <Pages/>,
   },
   
   {
