@@ -5,10 +5,10 @@
       "name" : "The Tribune",
       "type": "newspaper",
       "imageUrl": "/newspaper image/Tribune.webp",
-      "dates": ["2024-05-08"],
+      "dates": ["2024-05-08", "2024-05-09"],
       "pdfFiles": [
-        { "date": "2024-04-07", "path": "/newspapers/DAA.pdf"  },
-        { "date": "2024-05-08", "path": "/newspapers/8/5/24/Tribune Chandigarh 08.05.2024.pdf"  }
+        { "date": "2024-05-08", "path": "/newspapers/8/5/24/Tribune Chandigarh 08.05.2024.pdf"  },
+        {  "date": "2024-05-09", "path": "/newspapers/8/5/24/NIE Chennai 08.05.2024.pdf" }
       ]
     },
 

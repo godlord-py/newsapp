@@ -5,7 +5,8 @@ import router from './routes/routes';
 import { RouterProvider } from 'react-router-dom';
 import VisitedSites from './components/cache'; // Import VisitedSites component
 import Footer from './components/footer';
-
+import Jobs from './components/Jobs';
+import NavBar from './layouts/Navbar';
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -31,6 +32,7 @@ function App() {
           theme === "dark" ? "dark" : ""
         }`}
       >
+         <NavBar/>
         <RouterProvider router={router} />  
         <Footer/>  
       </div>

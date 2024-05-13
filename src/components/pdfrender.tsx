@@ -4,7 +4,7 @@ import { Button, CircularProgress, Pagination } from '@nextui-org/react';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import '/home/godlord/news/newsapp/src/styles/Pages.css'; 
-import NewspaperSkeleton from './skeleton';
+import NewspaperSkeleton from './UI/skeleton';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from 'react-router-dom';
 
@@ -90,25 +90,25 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
   const handleZoomIn = () => {
     setLoading(true); // Set loading to true while zooming
     setScale((prevScale) => Math.min(prevScale + 0.2, maxScale));
-    setTimeout(() => setLoading(false), 500);
+    setTimeout(() => setLoading(false), 600);
   };
   
   const handleZoomOut = () => {
     setLoading(true); // Set loading to true while zooming
     setScale((prevScale) => Math.max(minScale, prevScale - 0.2));
-    setTimeout(() => setLoading(false), 500); 
+    setTimeout(() => setLoading(false), 600); 
   };
 
   const handleMZoomIn = () => {
     setLoading(true); // Set loading to true while zooming
     setMobileScale((prevScale) => Math.min(prevScale + 0.2, maxMScale));
-    setTimeout(() => setLoading(false), 500);
+    setTimeout(() => setLoading(false), 600);
   };
   
   const handleMZoomOut = () => {
     setLoading(true); // Set loading to true while zooming
     setMobileScale((prevScale) => Math.max(minMScale, prevScale - 0.2));
-    setTimeout(() => setLoading(false), 500); 
+    setTimeout(() => setLoading(false), 600); 
   };
 
   const handleShareClick = () => {
@@ -148,11 +148,10 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
     <div className='mobilepdf ml-0 sm:ml-[-64px] w-full max-w-screen'>
     {loading && (
         <div className="flex flex-col justify-center items-center h-screen">
-          {isMobile && <CircularProgress className='justify-center text-center' />}
-          <div className='mt-20 ml-48'>
+          {isMobile && <CircularProgress className='justify-center fixed z-50 text-center' />}
+          <div className='mt-10 ml-48 fixed z-50'>
           {!isMobile && <NewspaperSkeleton/>}
           </div>
-          <p className="mt-4 text-xl font-semibold text-gray-600">Paper is loading...</p>
         </div>
       )}
       {/* MOBILE UI */}

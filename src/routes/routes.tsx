@@ -2,9 +2,8 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Pages from '../components/NewsPage';
 import FirstPage from '../components/FirstPage';
-import PDFViewer from '../components/PDFviewer';
 import NotFound from '../components/NotFound';
-
+import JobsLayout from '../components/Jobs';
 const router = createBrowserRouter([
 
   {
@@ -12,7 +11,6 @@ const router = createBrowserRouter([
     element: (
       <>
         <FirstPage />
-        <Pages />
       </>
     ),
   },
@@ -20,7 +18,10 @@ const router = createBrowserRouter([
     path: '/pages',
     element: <Pages/>,
   },
-  
+  {
+    path: '/jobs',
+    element: <JobsLayout />,
+  },
   {
     path: '*',
     element: <NotFound />,

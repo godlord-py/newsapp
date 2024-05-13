@@ -42,7 +42,7 @@
     animation: blurAnimation 4s ease-in-out infinite; 
   }
 .dark .HeadingText {
-  background-image: url("https://blog.newspapers.com/wp-content/uploads/2024/04/Washington_Times-1170x606.jpg");
+  background-image: url("/home/godlord/news/newsapp/public/newspaper image/headingimg.jpg");
 }
 
 

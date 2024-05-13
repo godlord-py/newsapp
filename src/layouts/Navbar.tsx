@@ -3,6 +3,7 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, Navba
 import { ThemeContext } from "../context/theme";
 import ThemeToggle from "../components/Themebutton";
 import { redirect } from "react-router-dom";
+import TabButton from "../components/UI/Tabs";
 
 
 const NavBar = () => {
@@ -44,9 +45,10 @@ const NavBar = () => {
 
       <NavbarContent className="hidden sm:flex gap-4" justify="start">
         <NavbarItem>
-          <Link href="/" aria-current="page">Home</Link>
+            <TabButton/>
         </NavbarItem>
       </NavbarContent>
+      
       
       <NavbarContent className='flex justify-end align-end'>
         <ThemeToggle

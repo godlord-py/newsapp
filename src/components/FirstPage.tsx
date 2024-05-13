@@ -7,20 +7,21 @@ import NavBar from "../layouts/Navbar";
 import "/home/godlord/news/newsapp/src/styles/FirstPage.css";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import Separators from "./UI/seperator";
+import { Link } from "@nextui-org/react";
+
+
 
 const FirstPage = () => {
   const [imagePosition, setImagePosition] = useState("top-16");
   const { theme } = useContext(ThemeContext);
   const isMobile = window.innerWidth <= 600; 
-  const scrollTo = () => {
-    window.scrollTo({
-      top: 780,
-      behavior: 'smooth'
-    });
+ 
+  const Handlepage = () => {
+    <Link href="/pages">
+    </Link>
   };
   return (
     <>
-    <NavBar/>
     <div className="dark:bg-[#111010] w-full min-h-screen relative">
       <div className="blurup"></div>
       
@@ -30,12 +31,12 @@ const FirstPage = () => {
           Latest<br />
           News Headlines <FcNews className="newssymbol mt-16 ml-4 text-black dark:text-white" />
         </h1>
- 
           <Separators />
-        
-        <button onClick={scrollTo} className="flex mt-10 p-2 text-white bg-green-600 text-xl px-6 py-3 rounded-full hover:bg-blue-600 dark:bg-[#111010] dark:border-4 dark:hover:bg-blue-600 transition-transform hover:scale-1">
-          Read Now  <AiOutlineArrowDown className="m-1 text-2xl"/>
+          <Link href="/pages">
+        <button onClick={Handlepage} className="flex mt-10 p-2 text-white bg-green-600 text-xl px-6 py-3 rounded-full hover:bg-blue-600 dark:bg-[#111010] dark:border-4 dark:hover:bg-blue-600 transition-transform hover:scale-1">
+          Read Now 
         </button>
+        </Link>
     
       </div>
       
@@ -54,5 +55,3 @@ const FirstPage = () => {
 };
 
 export default FirstPage;
-
-

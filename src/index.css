@@ -150,5 +150,10 @@ body {
   .react-pdf__Page {
     margin-right: 80px;
   }
-  
+  .mobiledate {
+    margin-left: 2px;
+  }
+  .mobiletype {
+    margin-top: 10px;
+  }
 }
