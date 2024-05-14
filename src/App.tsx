@@ -1,40 +1,36 @@
-import React, { useContext} from 'react';
+import React, { useContext } from 'react';
 import './App.css';
 import { ThemeContext } from './context/theme';
-import router from './routes/routes';
-import { RouterProvider } from 'react-router-dom';
-import VisitedSites from './components/cache'; // Import VisitedSites component
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
+import Pages from './components/NewsPage';
+import FirstPage from './components/FirstPage'; 
+import NotFound from './components/NotFound';
+import JobsLayout from './components/Jobs'; 
 import Footer from './components/footer';
-import Jobs from './components/Jobs';
 import NavBar from './layouts/Navbar';
+import BottomNavigator from './components/UI/MobileNavigator';
 
 function App() {
   const { theme } = useContext(ThemeContext);
-
-  // Define the addVisitedSite function
-  const addVisitedSite = (site: string) => {
-    // Retrieve existing visited sites from local storage
-    const storedVisitedSites = localStorage.getItem('visitedSites');
-    let visitedSites = storedVisitedSites ? JSON.parse(storedVisitedSites) : [];
-
-    // Prevent duplicate entries
-    if (!visitedSites.includes(site)) {
-      visitedSites.push(site);
-      // Update local storage with the updated visited sites
-      localStorage.setItem('visitedSites', JSON.stringify(visitedSites));
-    }
-  };
-
+  const isMobile = window.innerWidth < 640;
   return (
     <>
       <div
-        className={`h-screen w-full mx-auto py-2 ${
-          theme === "dark" ? "dark" : ""
+        className={`h-screen w-full mx-auto py-2  ${
+          theme === 'dark' ? 'dark' : ''
         }`}
       >
-         <NavBar/>
-        <RouterProvider router={router} />  
-        <Footer/>  
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<FirstPage />} />
+            <Route path="/pages" element={<Pages />} />
+            <Route path="/jobs" element={<JobsLayout />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Footer />
+          {isMobile && <BottomNavigator />}
+        </BrowserRouter>
       </div>
     </>
   );

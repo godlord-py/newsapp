@@ -17,20 +17,17 @@ const PDFViewer = ({ selectedPublication, onClose, scrolled, selectedDate }) => 
         selectedDate.setHours(0, 0, 0, 0)
     )
   : null;
-  console.log('Selected Date:', selectedDate);
-console.log('PDF Files:', selectedPublication.pdfFiles);
-console.log('Selected Date Type:', typeof selectedDate);
   return (
     <div
       ref={publicationContainerRef}
-      className={`mobilepdf fixed top-0 left-0 w-full h-full bg-white z-50 overflow-y-scroll ${scrolled ? 'scrolled' : ''}`}
+      className={`mobilepdf dark:bg-[#413d3d] fixed top-0 left-0 w-full h-full bg-white z-50 overflow-y-scroll ${scrolled ? 'scrolled' : ''}`}
     >
       <div className="fixed top-0 left-0 w-full bg-gray-100 shadow-md sm:z-10 z-10 p-4 flex justify-between items-center">
-        <h3 className="text-xl font-semibold text-gray-800">{selectedPublication.name}</h3>
+        <h3 className="text-xl font-semibold font-custom3 text-gray-800">{selectedPublication.name}</h3>
         <button
           id="cross-button"
           onClick={handleCrossButtonClick}
-          className={`bg-red-500 hover:bg-red-600 -mt-2 text-white rounded-full text-2xl px-2 py-2 ${scrolled ? 'floating' : ''}`}
+          className={`bg-red-500 hover:bg-red-600  text-white rounded-full text-2xl px-2 py-2 ${scrolled ? 'floating' : ''}`}
         >
           <RxCross2 />
         </button>

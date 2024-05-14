@@ -42,7 +42,7 @@
     animation: blurAnimation 4s ease-in-out infinite; 
   }
 .dark .HeadingText {
-  background-image: url("/home/godlord/news/newsapp/public/newspaper image/headingimg.jpg");
+  background-image: url("/newspaper image/headingimg.webp");
 }
 
 

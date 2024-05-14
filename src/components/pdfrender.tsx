@@ -7,19 +7,21 @@ import '/home/godlord/news/newsapp/src/styles/Pages.css';
 import NewspaperSkeleton from './UI/skeleton';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from 'react-router-dom';
+import PageThumbnailNavigator from './UI/PageThumbnailNavigator';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 
 const PDFview = ({ pdfFiles, onLoadSuccess }) => {
   const maxScale = 1.4;
   const maxMScale = 1;
-  const minScale = 0.6;
+  const minScale = 0.7;
   const minMScale = 0.4;
   const MobileZoom = 0.4;
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [scale, setScale] = useState(minScale);
   const [mobilescale , setMobileScale] = useState(MobileZoom);
-  const [loading, setLoading] = useState(true); // State variable for loading indicator
+  const [loading, setLoading] = useState(true); 
   const pagesRef = useRef({});
   const scrollPositions = useRef({});
   const [hideButtons, setHideButtons] = useState(false);
@@ -36,10 +38,11 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
     };
   }, []);
 
+  
   useEffect(() => {
     setPageNumber(1);
+    setLoadedPages({ 1: true }); // Load the first page by default
   }, [pdfFiles]);
-
   useEffect(() => {
     setLoading(true); // Set loading to true when PDF files change
   }, [pdfFiles]);
@@ -58,13 +61,16 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
   };
 
   const handlePageChange = (page) => {
+    const nextPage = Math.min(Math.max(page, 1), numPages); 
     saveScrollPosition(pageNumber);
-    setPageNumber(page);
-    scrollToPage(page);
-  
-    // Check if the next page is not loaded and load it manually
-    if (!pagesRef.current[page + 1]) {
-      setPageNumber(page + 1);
+    setPageNumber(nextPage);
+    scrollToPage(nextPage);
+    // Load the next page if not already loaded
+    if (!loadedPages[page + 1]) {
+      setLoadedPages((prevLoadedPages) => ({
+        ...prevLoadedPages,
+        [page + 1]: true,
+      }));
     }
   };
   
@@ -90,13 +96,13 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
   const handleZoomIn = () => {
     setLoading(true); // Set loading to true while zooming
     setScale((prevScale) => Math.min(prevScale + 0.2, maxScale));
-    setTimeout(() => setLoading(false), 600);
+    setTimeout(() => setLoading(false));
   };
   
   const handleZoomOut = () => {
     setLoading(true); // Set loading to true while zooming
     setScale((prevScale) => Math.max(minScale, prevScale - 0.2));
-    setTimeout(() => setLoading(false), 600); 
+    setTimeout(() => setLoading(false)); 
   };
 
   const handleMZoomIn = () => {
@@ -126,11 +132,43 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
 
   const handlePageVisible = (pageNumber) => {
     if (pageNumber === numPages) return;
-    // Load the next page if not already loaded
-    if (!pagesRef.current[pageNumber + 1]) {
-      setPageNumber(pageNumber + 1);
+  
+    // Load the next two pages if not already loaded
+    if (!loadedPages[pageNumber + 1]) {
+      setLoadedPages((prevLoadedPages) => ({
+        ...prevLoadedPages,
+        [pageNumber + 1]: true,
+      }));
+    }
+  
+    if (!loadedPages[pageNumber + 2]) {
+      setLoadedPages((prevLoadedPages) => ({
+        ...prevLoadedPages,
+        [pageNumber + 2]: true,
+      }));
     }
   };
+  const handleKeyDown = (event) => {
+    if (event.key === 'ArrowLeft') {
+      // Go to the previous page
+      handlePageChange(pageNumber === 1 ? numPages : pageNumber - 1);
+    } else if (event.key === 'ArrowRight') {
+      // Go to the next page
+      handlePageChange(pageNumber === numPages ? 1 : pageNumber + 1);
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDownEvent = (event) => {
+      handleKeyDown(event);
+    };
+  
+    window.addEventListener('keydown', handleKeyDownEvent);
+  
+    return () => {
+      window.removeEventListener('keydown', handleKeyDownEvent);
+    };
+  }, [handleKeyDown]);
 
   const handleScrollToTop = () => {
     const publicationContainer = document.querySelector('.mobilepdf'); // Select the container element
@@ -186,33 +224,33 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
       {/* PC UI */}
       {!isMobile && (
         <>
-          <Pagination
-            isCompact={true}
-            className='pagination text-base'
-            total={numPages || 1}
-            initialPage={pageNumber}
-            onChange={handlePageChange}
-          />     
-    
-                  <Document
-                file={decodeURIComponent(pdfFiles)}
-                onLoadSuccess={onDocumentLoadSuccess}
-                onLoadError={onLoadError}
-                options={options}
-                className={"sm:mr-28 mt-20"}
-              >
-
-                {Array.from(new Array(numPages), (el, index) => (
-                  <Page
-                    key={`page_${index + 1}`}
-                    pageNumber={index + 1}
-                    scale={scale}
-                    onLoadSuccess={() => handlePageVisible(index + 1)}
-                    inputRef={(ref) => { pagesRef.current[index + 1] = ref; }}
-                  />
-                ))}
-              </Document>
-    
+          <div className="fixed top-60 left-0 w-full sm:z-10 z-10 p-4 flex justify-between items-center">
+            <FaArrowLeft className="cursor-pointer w-[40px] h-[40px] bg-gray-400 rounded-full text-2xl" onClick={() => handlePageChange(pageNumber - 1)} />
+            <FaArrowRight className="cursor-pointer w-[40px] h-[40px] bg-gray-400 rounded-full text-2xl" onClick={() => handlePageChange(pageNumber + 1)} />
+          </div>
+        <PageThumbnailNavigator
+            pdfFile={decodeURIComponent(pdfFiles)}
+            numPages={numPages}
+            currentPage={pageNumber}
+            onPageChange={handlePageChange}
+          />
+           <Document
+            file={decodeURIComponent(pdfFiles)}
+            onLoadSuccess={onDocumentLoadSuccess}
+            onLoadError={onLoadError}
+            options={options}
+            className={"sm:mr-20 mt-20"}
+          >
+            <Page
+              key={`page_${pageNumber}`}
+              pageNumber={pageNumber}
+              scale={scale}
+              onLoadSuccess={() => handlePageVisible(pageNumber)}
+              inputRef={(ref) => {
+                pagesRef.current[pageNumber] = ref;
+              }}
+            />
+          </Document>
           <div className={`zoom-buttons ${hideButtons ? 'hide' : ''}`}>
             <Button aria-label="Zoom In" className='nextbutton m-2' onClick={handleZoomIn}>Zoom In</Button>
             <Button aria-label="Zoom Out" className='nextbutton' onClick={handleZoomOut}>Zoom Out</Button>

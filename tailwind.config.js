@@ -9,6 +9,11 @@ export default {
     extend: {
       colors: {
         ...violet,
+      },
+      fontFamily: {
+        custom: ['Poetsen One'],
+        custom2: ['Raleway'],
+        custom3: ['Noto Serif'],
       }
     },
   },

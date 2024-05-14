@@ -4,7 +4,7 @@ import { ThemeContext } from "../context/theme";
 import ThemeToggle from "../components/Themebutton";
 import { redirect } from "react-router-dom";
 import TabButton from "../components/UI/Tabs";
-
+import { useLocation } from 'react-router-dom'
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
