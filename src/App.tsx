@@ -9,6 +9,9 @@ import JobsLayout from './components/Jobs';
 import Footer from './components/footer';
 import NavBar from './layouts/Navbar';
 import BottomNavigator from './components/UI/MobileNavigator';
+import AdminForm from './components/admin';
+import NewsFeed from './components/LatestNews';
+import JobDetails from './components/JobAPI';
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -23,10 +26,13 @@ function App() {
         <BrowserRouter>
           <NavBar />
           <Routes>
-            <Route path="/" element={<FirstPage />} />
+            <Route path="/" element={<FirstPage/>} />
             <Route path="/pages" element={<Pages />} />
             <Route path="/jobs" element={<JobsLayout />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/admin" element={<AdminForm />} />
+            <Route path='/livenews' element={<NewsFeed/>} />
+            <Route path='/job' element={<JobDetails/>} />
           </Routes>
           <Footer />
           {isMobile && <BottomNavigator />}

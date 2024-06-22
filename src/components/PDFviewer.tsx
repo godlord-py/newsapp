@@ -27,7 +27,7 @@ const PDFViewer = ({ selectedPublication, onClose, scrolled, selectedDate }) => 
         <button
           id="cross-button"
           onClick={handleCrossButtonClick}
-          className={`bg-red-500 hover:bg-red-600  text-white rounded-full text-2xl px-2 py-2 ${scrolled ? 'floating' : ''}`}
+          className={`bg-red-500 hover:bg-red-600 fixed -mt-1 text-white rounded-full text-2xl px-2 py-2 ${scrolled ? 'floating' : ''}`}
         >
           <RxCross2 />
         </button>

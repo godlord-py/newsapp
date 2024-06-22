@@ -9,14 +9,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from 'react-router-dom';
 import PageThumbnailNavigator from './UI/PageThumbnailNavigator';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const PDFview = ({ pdfFiles, onLoadSuccess }) => {
   const maxScale = 1.4;
   const maxMScale = 1;
   const minScale = 0.7;
   const minMScale = 0.4;
-  const MobileZoom = 0.4;
+  const MobileZoom = 0.276;
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [scale, setScale] = useState(minScale);
@@ -29,16 +29,9 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
 
   // Lazy loading and caching
   const [loadedPages, setLoadedPages] = useState({});
-
   useEffect(() => {
     pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
-
-    return () => {
-      pdfjs.GlobalWorkerOptions.workerSrc = null;
-    };
   }, []);
-
-  
   useEffect(() => {
     setPageNumber(1);
     setLoadedPages({ 1: true }); // Load the first page by default
@@ -195,27 +188,33 @@ const PDFview = ({ pdfFiles, onLoadSuccess }) => {
       {/* MOBILE UI */}
         {isMobile && (
            <>
-               <div className="mobilezoom-buttons" style={{ zIndex: 1001 }}>
-              <button className='nextbutton m-2' onClick={handleMZoomIn}>Zoom In</button>
-              <button className='nextbutton p-4' onClick={handleMZoomOut}>Zoom Out</button>
-            </div>
-
+           <PageThumbnailNavigator
+            pdfFile={decodeURIComponent(pdfFiles)}
+            numPages={numPages}
+            currentPage={pageNumber}
+            onPageChange={handlePageChange}
+          />
+           <TransformWrapper>
+             <TransformComponent>
         <Document
           file={decodeURIComponent(pdfFiles)}
           onLoadSuccess={onDocumentLoadSuccess}
           onLoadError={onLoadError}
           options={options}
-          className={"sm:mr-28 mt-20"}
+          className={"sm:mr-28 mt-10"}
         >
-            {Array.from(new Array(numPages), (el, index) => (
-              <Page
-                key={`page_${index + 1}`}
-                pageNumber={index + 1}
-                scale={mobilescale}
-                onLoadSuccess={() => handlePageVisible(index + 1)}
-                inputRef={(ref) => { pagesRef.current[index + 1] = ref; } } />
-            ))}
+               <Page
+              key={`page_${pageNumber}`}
+              pageNumber={pageNumber}
+              scale={MobileZoom}
+              onLoadSuccess={() => handlePageVisible(pageNumber)}
+              inputRef={(ref) => {
+                pagesRef.current[pageNumber] = ref;
+              }}
+            />
           </Document>
+          </TransformComponent>
+          </TransformWrapper>    
         </>
       )}
 

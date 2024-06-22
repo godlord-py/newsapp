@@ -32,7 +32,7 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} shouldHideOnScroll isBordered>
+    <Navbar className="z-50" onMenuOpenChange={setIsMenuOpen} shouldHideOnScroll isBordered>
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}

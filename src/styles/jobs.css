@@ -1,0 +1,83 @@
+.dark .blurupjobs {
+    position: absolute;
+    width: 50vw;
+    height: 50vw;
+    min-width: 350px;
+    min-width: 350px;
+    top: -560px;
+    left: -40vw;
+    border-radius: 764px;
+    background: rgba(27, 24, 84, 0.7);
+    filter: blur(100px);
+    z-index: 0;
+    animation: blurAnimation 4s ease-in-out infinite; 
+  }
+
+  .dark .blurdownjobs {
+    position: absolute;
+    width: 40vw;
+    height: 20vw;
+    min-width: 350px;
+    min-width: 350px;
+    top: 300px;
+    left: 30vw;
+    border-radius: 764px;
+    background: rgba(47, 74, 45, 0.7);
+    filter: blur(100px);
+    z-index: 0;
+    animation: blurAnimation 4s ease-in-out infinite; 
+  }
+
+  .dark .blurupnews {
+    width: 50vw;
+    height: 50vw;
+    min-width: 350px;
+    min-width: 350px;
+    border-radius: 764px;
+    background: rgba(27, 24, 84, 0.7);
+    filter: blur(100px);
+    z-index: -100;
+    animation: blurAnimation 4s ease-in-out infinite; 
+  }
+
+  .neon-glow {
+    position: relative;
+  }
+  
+  .dark .neon-glow::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    background: rgba(58, 58, 58, 0.8);
+    z-index: -1;
+    filter: blur(10px);
+    border-radius: 8px;
+  }
+  
+  .dark .neon-glow:hover::before {
+    background: rgba(63, 62, 104, 0.8);
+  }
+
+  
+  .neon-glow::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    background: rgba(217, 210, 210, 0.8);
+    z-index: -1;
+    filter: blur(10px);
+    border-radius: 8px;
+  }
+  
+  .neon-glow:hover::before {
+    background: rgba(223, 223, 255, 0.8);
+  }
+
+
+  
