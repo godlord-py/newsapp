@@ -5,40 +5,55 @@ const AdminForm = () => {
   const [type, setType] = useState('newspaper');
   const [imageUrl, setImageUrl] = useState('');
   const [language, setLanguage] = useState('English');
-  const [dates, setDates] = useState(['']);
-  const [pdfFiles, setPdfFiles] = useState([{ date: '', path: '' }]);
+  const [date, setDate] = useState('');
+  const [file, setFile] = useState(null);
 
-  const handleDateChange = (index, value) => {
-    const newDates = [...dates];
-    newDates[index] = value;
-    setDates(newDates);
-  };
-
-  const handlePathChange = (index, value) => {
-    const newPdfFiles = [...pdfFiles];
-    newPdfFiles[index].path = value;
-    setPdfFiles(newPdfFiles);
-  };
-
-  const addDateField = () => {
-    setDates([...dates, '']);
-    setPdfFiles([...pdfFiles, { date: '', path: '' }]);
-  };
-
-  
-  const removeDateField = (index) => {
-    const newDates = dates.filter((_, i) => i !== index);
-    const newPdfFiles = pdfFiles.filter((_, i) => i !== index);
-    setDates(newDates);
-    setPdfFiles(newPdfFiles);
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newPublication = { name, type, imageUrl, language, dates, pdfFiles };
+    if (!file || !date) {
+      alert('Please select a PDF file and enter a date');
+      return;
+    }
+
+    // First, upload the file
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('name', name);
+    formData.append('date', date);
 
     try {
+      console.log('Sending data:', { name, date, file }); 
+      const uploadResponse = await fetch('http://localhost:3000/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!uploadResponse.ok) {
+        const errorText = await uploadResponse.text();
+        console.error('Upload response:', errorText); 
+        throw new Error(`Failed to upload file: ${errorText}`);
+      }
+
+      const uploadResult = await uploadResponse.json();
+      console.log('Upload result:', uploadResult);
+
+      // Then, add the publication
+      const newPublication = { 
+        name, 
+        type, 
+        imageUrl, 
+        language, 
+        dates: [date], 
+        pdfFiles: [{ date, path: uploadResult.path }]
+      };
+
+      console.log('Sending publication data:', newPublication);
+
       const response = await fetch('http://localhost:3000/api/add-publication', {
         method: 'POST',
         headers: {
@@ -47,21 +62,22 @@ const AdminForm = () => {
         body: JSON.stringify(newPublication),
       });
 
-      if (response.ok) {
-        alert('Publication added successfully!');
-        setName('');
-        setType('newspaper');
-        setImageUrl('');
-        setLanguage('English');
-        setDates(['']);
-        setPdfFiles([{ date: '', path: '' }]);
-      } else {
+      if (!response.ok) {
         const errorText = await response.text();
-        alert(`Failed to add publication: ${errorText}`);
+        console.error('Add publication response:', errorText);  
+        throw new Error(`Failed to add publication: ${errorText}`);
       }
+
+      alert('Publication added successfully!');
+      setName('');
+      setType('newspaper');
+      setImageUrl('');
+      setLanguage('English');
+      setDate('');
+      setFile(null);
     } catch (error) {
-      console.error('Error adding publication:', error);
-      alert('Failed to add publication. Please check your network connection.');
+      console.error('Error:', error);
+      alert(error.message);
     }
   };
 
@@ -127,57 +143,30 @@ const AdminForm = () => {
             </label>
           </div>
           <div className="w-full px-3 mb-4">
-            <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-300 text-xs font-bold mb-2">
-              Dates and PDF Paths
+            <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-300 text-xs font-bold mb-2" htmlFor="date">
+              Date
+              <input
+                id="date"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="block w-full mt-1 p-2 border rounded-md dark:bg-gray-700 dark:text-gray-200"
+                required
+              />
             </label>
-            {dates.map((dateField, index) => (
-              <div key={index} className="flex flex-wrap -mx-3 mb-2">
-                <div className="w-full px-3">
-                  <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-300 text-xs font-bold mb-2">
-                    Date
-                    <input
-                    type="date"
-                    value={dates}
-                    onChange={(e) => handleDateChange(index, e.target.value)}
-                    className="block w-full mt-1 p-2 border rounded-md dark:bg-gray-700 dark:text-gray-200"
-                    required
-                  />
-                  </label>
-                </div>
-                <div className="w-full px-3">
-                  <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-300 text-xs font-bold mb-2">
-                    PDF Path
-                <input
-                    type="text"
-                    value={pdfFiles[index].path}
-                    onChange={(e) => handlePathChange(index, e.target.value)}
-                    className="block w-full mt-1 p-2 border rounded-md dark:bg-gray-700 dark:text-gray-200"
-                    required
-                  />
-                  </label>
-                </div>
-                {dates.length > 1 && (
-                  <div className="w-full px-3">
-                    <button
-                      type="button"
-                      onClick={() => removeDateField(index)}
-                      className="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
-            <div className="w-full px-3">
-              <button
-                type="button"
-                onClick={addDateField}
-                className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              >
-                Add Date
-              </button>
-            </div>
+          </div>
+          <div className="w-full px-3 mb-2">
+            <label className="block uppercase tracking-wide text-gray-700 dark:text-gray-300 text-xs font-bold mb-2" htmlFor="file">
+              Upload PDF
+              <input
+                id="file"
+                type="file"
+                accept=".pdf"
+                onChange={handleFileChange}
+                className="block w-full mt-1 p-2 border rounded-md dark:bg-gray-700 dark:text-gray-200"
+                required
+              />
+            </label>
           </div>
         </div>
         <div className="w-full px-3 mb-2">

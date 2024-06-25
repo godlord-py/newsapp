@@ -13,6 +13,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import PagesSkeleton from "./UI/Pagesskeleton";
 import { CircularProgress } from "@nextui-org/react";
 import "/home/godlord/news/newsapp/src/styles/jobs.css";
+import { pdfjs } from "react-pdf";
 
 const Pages = () => {
   const [selectedPublication, setSelectedPublication] = useState(null);
@@ -24,7 +25,41 @@ const Pages = () => {
   const [loading, setLoading] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [passedDate, setPassedDate] = useState(null);
+  const [thumbnails, setThumbnails] = useState({});
   const isMobile = window.innerWidth <= 600;
+  
+  const renderPdfThumbnail = async (pdfUrl) => {
+    const loadingTask = pdfjs.getDocument(pdfUrl);
+    const pdf = await loadingTask.promise;
+    const page = await pdf.getPage(1);
+    const viewport = page.getViewport({ scale: 1 });
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+    const renderContext = {
+      canvasContext: context,
+      viewport: viewport,
+    };
+    await page.render(renderContext).promise;
+    return canvas.toDataURL();
+  };
+  
+  const generateThumbnails = async (publications) => {
+    const thumbnails = {};
+    for (const publication of publications) {
+      if (publication.pdfFiles && publication.pdfFiles.length > 0) {
+        const pdfUrl = publication.pdfFiles[0].path;
+        try {
+          thumbnails[publication.id] = await renderPdfThumbnail(pdfUrl);
+        } catch (error) {
+          console.error(`Error generating thumbnail for ${publication.id}:`, error);
+        }
+      }
+    }
+    setThumbnails(thumbnails);
+  };
+  
   
   useEffect(() => {
     fetchPublications();
@@ -70,13 +105,16 @@ const Pages = () => {
     try {
       const response = await fetch("/newspapers.json");
       const data = await response.json();
-      setPublications(data.newspapers.concat(data.magazines));
+      const allPublications = setPublications(data.newspapers.concat(data.magazines));
+      await generateThumbnails(allPublications);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching publications:", error);
       setLoading(false);
     }
   };
+
+  
 
   const handlePublicationClick = (publication) => {
     setSelectedPublication(publication);

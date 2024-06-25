@@ -87,7 +87,7 @@ const JobList: React.FC = () => {
   return (
     <div className="p-5">
       <h1 className="text-3xl font-bold mb-5">Job Listings</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {jobs.map((job) => (
           <Card key={job.id} className="max-w-[400px] transition duration-500 ease-in-out transform hover:scale-105 hover:shadow-lg hover:rotate-1 z-40">
             <CardHeader className="flex gap-3">

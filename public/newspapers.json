@@ -298,6 +298,22 @@
         }
       ],
       "language": "English"
+    },
+    {
+      "id": 19,
+      "name": "gvgegegege",
+      "type": "newspaper",
+      "imageUrl": "gegwegwegewgegweg",
+      "dates": [
+        "2024-07-03"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-07-03",
+          "path": "/newspapers/2024-07-03/M7.pdf"
+        }
+      ],
+      "language": "English"
     }
   ],
   "magazines": [
