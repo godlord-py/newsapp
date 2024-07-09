@@ -26,3 +26,4 @@ public/
 
 # Local Netlify folder
 .netlify
+.vercel
