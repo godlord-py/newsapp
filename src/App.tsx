@@ -10,7 +10,6 @@ import Footer from './components/footer';
 import NavBar from './layouts/Navbar';
 import BottomNavigator from './components/UI/MobileNavigator';
 import AdminForm from './components/admin';
-import NewsFeed from './components/LatestNews';
 import JobDetails from './components/JobAPI';
 import SignInPage from './components/signin/Signin';
 import ProtectedRoute from './layouts/ProtectedRoute';
@@ -57,7 +56,6 @@ function App() {
           </ProtectedRoute>
           } 
         />
-            <Route path='/livenews' element={<NewsFeed/>} />
             <Route path='/job' element={<JobDetails/>} />
             <Route path= '/job/:id' element={<JobDetails/>} />
             <Route path= '/signin' element={<SignInPage setIsLoggedIn={setIsLoggedIn}/>} />

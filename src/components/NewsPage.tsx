@@ -12,7 +12,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import PagesSkeleton from "./UI/Pagesskeleton";
 import { CircularProgress } from "@nextui-org/react";
-import "/home/godlord/news/newsapp/src/styles/jobs.css";
 import { pdfjs } from "react-pdf";
 
 const Pages = () => {
