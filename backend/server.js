@@ -6,23 +6,23 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 import multer from 'multer';
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 
 console.log('Server starting...');
 
+const SECRET_KEY = 'ewgwegegwegegegqwfqwfwhuohp;wfhjipwhfwfwldfuqwfwfwwqfwf';
+const ADMIN_USERNAME = 'admin';
+const ADMIN_PASSWORD = 'password';
+
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(cookieParser());
 
-const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173'];
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-}));
+
+
+// Middleware to verify JWT token
 
 app.use(helmet({
   contentSecurityPolicy: {
@@ -39,11 +39,68 @@ app.use(helmet({
   }
 }));
 
+const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173'];
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const newspapersFilePath = path.join(__dirname, '../public', 'newspapers.json');
-
 console.log('Configuring multer...');
+
+app.post('/api/signin', (req, res) => {
+  const { username, password } = req.body;
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    const token = jwt.sign({ id: username }, SECRET_KEY, { expiresIn: 86400 }); // 24 hours
+    console.log('Generated token for user:', username);
+    console.log('Token:', token);
+    res.json({ auth: true, token });
+  } else {
+    res.status(401).json({ auth: false, message: 'Invalid credentials' });
+  }
+});
+
+// Middleware function to verify JWT token
+const verifyToken = (req, res, next) => {
+  const bearerHeader = req.headers['authorization'];
+
+  if (!bearerHeader) {
+    return res.status(403).json({ message: 'No token provided' });
+  }
+
+  const [bearer, token] = bearerHeader.split(' ');
+
+  if (bearer !== 'Bearer' || !token) {
+    return res.status(403).json({ message: 'Invalid token format' });
+  }
+
+  jwt.verify(token, SECRET_KEY, (err, decoded) => {
+    if (err) {
+      console.error('Token verification error:', err);
+      if (err.name === 'TokenExpiredError') {
+        return res.status(401).json({ message: 'Token expired' });
+      }
+      if (err.name === 'JsonWebTokenError') {
+        console.error('JWT Error details:', err.message);
+      }
+      return res.status(401).json({ message: 'Failed to authenticate token' });
+    }
+    console.log('Decoded token:', decoded);
+    req.userId = decoded.id;
+    next();
+  });
+};
+
+
+
+app.use('/api/admin', verifyToken);
 
 app.post('/api/upload', (req, res) => {
   console.log('Upload route hit');
@@ -105,9 +162,9 @@ app.post('/api/upload', (req, res) => {
   });
 });
 
-app.post('/api/add-publication', (req, res) => {
+app.post('/api/add-publication', verifyToken, (req, res) => {
   const newPublicationData = req.body;
-
+  console.log('Received request to add publication:', req.body);
   fs.readFile(newspapersFilePath, 'utf8', (err, data) => {
     if (err) {
       console.error('Error reading newspapers file:', err);
@@ -148,6 +205,106 @@ app.post('/api/add-publication', (req, res) => {
         return res.status(500).json({ message: 'Error writing newspapers file' });
       }
       res.status(200).json({ message: 'Publication added successfully' });
+    });
+  });
+});
+
+app.put('/api/update-publication-pdf', verifyToken, (req, res) => {
+  const { name, type, date, newPdfPath } = req.body;
+
+  fs.readFile(newspapersFilePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading newspapers file:', err);
+      return res.status(500).json({ message: 'Error reading newspapers file' });
+    }
+
+    let publications = JSON.parse(data);
+    const targetArray = type === 'newspaper' ? publications.newspapers : publications.magazines;
+    const publicationIndex = targetArray.findIndex(pub => pub.name === name);
+
+    if (publicationIndex === -1) {
+      return res.status(404).json({ message: 'Publication not found' });
+    }
+
+    const pdfFileIndex = targetArray[publicationIndex].pdfFiles.findIndex(file => file.date === date);
+
+    if (pdfFileIndex === -1) {
+      return res.status(404).json({ message: 'PDF file not found for the given date' });
+    }
+
+    targetArray[publicationIndex].pdfFiles[pdfFileIndex].path = newPdfPath;
+
+    fs.writeFile(newspapersFilePath, JSON.stringify(publications, null, 2), (err) => {
+      if (err) {
+        console.error('Error writing newspapers file:', err);
+        return res.status(500).json({ message: 'Error writing newspapers file' });
+      }
+      res.status(200).json({ message: 'PDF path updated successfully' });
+    });
+  });
+});
+
+app.delete('/api/delete-publication-date', verifyToken, (req, res) => {
+  const { name, type, date } = req.body;
+
+  fs.readFile(newspapersFilePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading newspapers file:', err);
+      return res.status(500).json({ message: 'Error reading newspapers file' });
+    }
+
+    let publications = JSON.parse(data);
+    const targetArray = type === 'newspaper' ? publications.newspapers : publications.magazines;
+    const publicationIndex = targetArray.findIndex(pub => pub.name === name);
+
+    if (publicationIndex === -1) {
+      return res.status(404).json({ message: 'Publication not found' });
+    }
+
+    targetArray[publicationIndex].dates = targetArray[publicationIndex].dates.filter(d => d !== date);
+    targetArray[publicationIndex].pdfFiles = targetArray[publicationIndex].pdfFiles.filter(file => file.date !== date);
+
+    fs.writeFile(newspapersFilePath, JSON.stringify(publications, null, 2), (err) => {
+      if (err) {
+        console.error('Error writing newspapers file:', err);
+        return res.status(500).json({ message: 'Error writing newspapers file' });
+      }
+      res.status(200).json({ message: 'Date deleted successfully' });
+    });
+  });
+});
+
+app.post('/api/add-publication-date', verifyToken, (req, res) => {
+  const { name, type, date, pdfPath } = req.body;
+
+  fs.readFile(newspapersFilePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading newspapers file:', err);
+      return res.status(500).json({ message: 'Error reading newspapers file' });
+    }
+
+    let publications = JSON.parse(data);
+    const targetArray = type === 'newspaper' ? publications.newspapers : publications.magazines;
+    const publicationIndex = targetArray.findIndex(pub => pub.name === name);
+
+    if (publicationIndex === -1) {
+      return res.status(404).json({ message: 'Publication not found' });
+    }
+
+    if (targetArray[publicationIndex].dates.includes(date)) {
+      return res.status(400).json({ message: 'Date already exists for this publication' });
+    }
+
+    targetArray[publicationIndex].dates.push(date);
+    targetArray[publicationIndex].dates.sort();
+    targetArray[publicationIndex].pdfFiles.push({ date, path: pdfPath });
+
+    fs.writeFile(newspapersFilePath, JSON.stringify(publications, null, 2), (err) => {
+      if (err) {
+        console.error('Error writing newspapers file:', err);
+        return res.status(500).json({ message: 'Error writing newspapers file' });
+      }
+      res.status(200).json({ message: 'New date added successfully' });
     });
   });
 });

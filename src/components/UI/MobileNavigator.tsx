@@ -13,7 +13,7 @@ const BottomNavigator = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg z-10">
+    <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg z-50">
       <div className="flex justify-around items-center py-2">
         <Link to="/" className="flex flex-col items-center text-gray-600 dark:text-gray-300 hover:text-blue-500 transition-colors"  onClick={scrollToTop}>
         <GoHome className='text-2xl'/>

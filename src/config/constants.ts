@@ -1,1 +1,2 @@
-export const API_ENDPOINT = import.meta.env.NEWS_API_ENDPOINT;
+console.log(import.meta.env); 
+export const API_ENDPOINT = import.meta.env.VITE_NEWS_API_ENDPOINT;

@@ -4,6 +4,7 @@ import { GiNewspaper } from "react-icons/gi";
 import { FaSuitcase } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
 import { Link } from "react-router-dom";
+import { BiNews } from "react-icons/bi";
 
 const TabButton = () => {
   // Get the initial tab state from local storage or default to "home"
@@ -38,6 +39,17 @@ const TabButton = () => {
                 <GoHome />
               </Link>
               <Link to="/" className="text-black dark:text-white">Home</Link>
+            </div>
+          }
+        />
+         <Tab
+          key="news"
+          title={
+            <div className="flex items-center space-x-2">
+              <Link to="/lv">
+                <BiNews />
+              </Link>
+              <Link to="/lv" className="text-black dark:text-white">News</Link>
             </div>
           }
         />

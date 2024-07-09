@@ -105,8 +105,7 @@ const Pages = () => {
     try {
       const response = await fetch("/newspapers.json");
       const data = await response.json();
-      const allPublications = setPublications(data.newspapers.concat(data.magazines));
-      await generateThumbnails(allPublications);
+      setPublications(data.newspapers.concat(data.magazines));
       setLoading(false);
     } catch (error) {
       console.error("Error fetching publications:", error);
@@ -198,156 +197,143 @@ const Pages = () => {
       year: "numeric",
     });
 
-  return (
-    <>
-      {loading ? (
-        !isMobile ? <PagesSkeleton /> : <CircularProgress className="mb-[600px] ml-44 mt-64" />
-      ) : (
-        <div className="dark:bg-[#111010] min-h-screen relative">
-          <div className="blurup"></div>
-        <h1 className="sm:text-3xl text-2xl mt-6 md:text-4xl font-bold text-center dark:text-white mb-8 font-custom3">
-          Explore Newspapers & Magazines
-        </h1>
-        <div
-          data-aos="fade-up"
-          data-aos-delay="200"
-          data-aos-duration="1000"
-          className="container mx-auto flex flex-wrap"
-        >
-          <div className="w-full mt-8 md:w-1/2 lg:w-1/3 px-4 sm:mb-8">   
-            <div className="mobiletype flex items-center mb-4">
-              <BiSolidNews className="text-2xl dark:text-white text-gray-600 mr-2" />
-              <span className="text-gray-800 dark:text-white font-semibold">
-                Filter by Type
-              </span>
+    return (
+      <>
+        {loading ? (
+          !isMobile ? (
+            <PagesSkeleton />
+          ) : (
+            <div className="flex justify-center items-center h-screen">
+              <CircularProgress className="text-blue-500" />
             </div>
-
-
-            {/* PC UI  */}
-            {!isMobile && (
-          <div className="w-3/2 dark:text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 flex flex-wrap">
-            <button
-              onClick={() => handleTypeChange({ value: "All" })}
-              className={`mr-2 mb-2 px-4 py-2 rounded-md focus:outline-none ${
-                selectedType === "All" ? "bg-blue-500 text-white" : "bg-gray-300 text-gray-800"
-              }`}
-            >
-              All Types
-            </button>
-            {options.map((option) => (
-              option.value !== "All" && (
-                <button
-                  key={option.value}
-                  onClick={() => handleTypeChange(option)}
-                  className={`mr-2 mb-2 px-4 py-2 rounded-md focus:outline-none transition-all ${
-                    selectedType === option.value ? "bg-blue-500 text-white" : "bg-gray-300 text-gray-800"
-                  }`}
-                >
-                  {option.label}
-                </button>
-              )
-            ))}
-          </div>
-        )}
-
-
-        {/* MOBILE UI */}
-        {isMobile && (
-          <div className="w-3/2 dark:text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 flex flex-wrap">
-            <button
-              onClick={() => handleTypeChange({ value: "All" })}
-              className={`mr-2 mb-2 px-2 py-1 w-[100px] rounded-md focus:outline-none ${
-                selectedType === "All" ? "bg-blue-500 text-white" : "bg-gray-300 text-gray-800"
-              }`}
-            >
-              All Types
-            </button>
-            {options.map((option) => (
-              option.value !== "All" && (
-                <button
-                  key={option.value}
-                  onClick={() => handleTypeChange(option)}
-                  className={`mr-2 mb-2 px-4 py-2 rounded-md focus:outline-none ${
-                    selectedType === option.value ? "bg-blue-500 text-white" : "bg-gray-300 text-gray-800"
-                  }`}
-                >
-                  {option.label}
-                </button>
-              )
-            ))}
-          </div>
-        )}
-          </div>
-          <div className="w-1/2 mt-8 ml-4 md:w-1/4 lg:w-1/4 sm:px-12 sm:mb-8">
-            <div className="flex items-center mb-4">
-              <MdDateRange className="text-2xl dark:text-white text-gray-600 mr-2" />
-              <span className="mobiledate mr-2 text-gray-800 dark:text-white font-semibold">
-                Filter by Date:
-              </span>
-            </div>
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              dateFormat="yyyy-MM-dd"
-              includeDates={availableDates}
-              placeholderText="Select a date"
-              className="mobiledate w-3/2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="w-full mt-8 md:w-1/2 lg:w-1/3 px-4 sm:mb-8">
-            <div className="flex  items-center mb-4">
-              <MdOutlineDynamicFeed className="text-2xl dark:text-white text-gray-600 mr-2" />
-              <span className="text-gray-800 dark:text-white font-semibold">
-                Filter by Name
-              </span>
-            </div>
-            <Select
-              options={nameOptions}
-              value={{
-                value: selectedName,
-                label: selectedName === "All" ? "All Names" : selectedName,
-              }}
-              onChange={handleNameChange}
-              className="w-3/2 border dark:text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="w-full mt-8 md:w-1/2 lg:w-1/3 px-4 mb-8">
-            <div className="flex items-center mb-4">
-              <MdOutlineDynamicFeed className="text-2xl dark:text-white text-gray-600 mr-2" />
-              <span className="text-gray-800 dark:text-white font-semibold">
-                Filter by Language
-              </span>
-            </div>
-            <div className="flex flex-wrap">
-              <button
-                onClick={() => handleLanguageChange({ value: "All" })}
-                className={`mr-2 mb-2 px-4 py-2 rounded-md focus:outline-none transition-all ${
-                  selectedLanguage === "All" ? "bg-blue-500 text-white" : "bg-gray-300 text-gray-800"
-                }`}
-              >
-                All Languages
-              </button>
-              {languageOptions.map((option) => (
-                option.value !== "All" && (
-                  <button
-                    key={option.value}
-                    onClick={() => handleLanguageChange(option)}
-                    className={`mr-2 mb-2 px-4 py-2 rounded-md focus:outline-none ${
-                      selectedLanguage === option.value ? "bg-blue-500 text-white" : "bg-gray-300 text-gray-800"
-                    }`}
-                  >
-                    {option.label}
-                  </button>
-                )
-              ))}
-            </div>
-          </div>
-          <div className="w-full px-4 border-t pt-8">
+          )
+        ) : (
+          <div className="min-h-screen bg-gray-100 dark:bg-[#111010] py-12">
+            <div className="blurup z-0"></div>
+            <div className="container z-50 mx-auto px-4">
+              <h1 className="text-4xl font-bold text-center z-[100] text-gray-900 dark:text-white mb-12 font-custom3">
+                Explore Newspapers & Magazines
+              </h1>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {/* Filter by Type */}
+                <div className="bg-gray-300 z-40 dark:bg-gray-800 rounded-lg shadow-md p-6 dark:bg-opacity-40 backdrop-blur-3xl">
+                  <div className="flex items-center mb-4">
+                    <BiSolidNews className="text-2xl text-blue-500 mr-2" />
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                      Filter by Type
+                    </h2>
+                  </div>
+                  <div className="flex flex-wrap -m-1">
+                    <button
+                      onClick={() => handleTypeChange({ value: "All" })}
+                      className={`m-1 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                        ${selectedType === "All"
+                          ? "bg-blue-500 text-white hover:bg-blue-600"
+                          : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                        }`}
+                    >
+                      All Types
+                    </button>
+                    {options.map((option) =>
+                      option.value !== "All" && (
+                        <button
+                          key={option.value}
+                          onClick={() => handleTypeChange(option)}
+                          className={`m-1 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                            ${selectedType === option.value
+                              ? "bg-blue-500 text-white hover:bg-blue-600"
+                              : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                            }`}
+                        >
+                          {option.label}
+                        </button>
+                      )
+                    )}
+                  </div>
+                </div>
+    
+                {/* Filter by Date */}
+                <div className="bg-gray-300 dark:bg-gray-800 z-40 rounded-lg shadow-md p-6 dark:bg-opacity-40 backdrop-blur-3xl">
+                  <div className="flex items-center mb-4">
+                    <MdDateRange className="text-2xl text-blue-500 mr-2" />
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                      Filter by Date
+                    </h2>
+                  </div>
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={handleDateChange}
+                    dateFormat="yyyy-MM-dd"
+                    includeDates={availableDates}
+                    placeholderText="Select a date"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  />
+                </div>
+    
+                {/* Filter by Name */}
+                <div className="bg-gray-300 dark:bg-gray-800 rounded-lg shadow-md p-6 dark:bg-opacity-40 backdrop-blur-3xl">
+                  <div className="flex items-center mb-4">
+                    <MdOutlineDynamicFeed className="text-2xl text-blue-500 mr-2" />
+                    <h2 className="text-xl font-semibold text-gray-900 z-50 dark:text-white">
+                      Filter by Name
+                    </h2>
+                  </div>
+                  <Select
+                    options={nameOptions}
+                    value={{
+                      value: selectedName,
+                      label: selectedName === "All" ? "All Names" : selectedName,
+                    }}
+                    onChange={handleNameChange}
+                    className="w-full border border-gray-300 z-50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  />
+                </div>
+    
+                {/* Filter by Language */}
+                <div className="bg-gray-300 dark:bg-gray-800 rounded-lg shadow-md p-6 dark:bg-opacity-40 backdrop-blur-3xl">
+                  <div className="flex items-center mb-4">
+                    <MdOutlineDynamicFeed className="text-2xl text-blue-500 mr-2" />
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white ">
+                      Filter by Language
+                    </h2>
+                  </div>
+                  <div className="flex flex-wrap -m-1">
+                    <button
+                      onClick={() => handleLanguageChange({ value: "All" })}
+                      className={`m-1 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                        ${selectedLanguage === "All"
+                          ? "bg-blue-500 text-white hover:bg-blue-600"
+                          : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                        }`}
+                    >
+                      All Languages
+                    </button>
+                    {languageOptions.map((option) =>
+                      option.value !== "All" && (
+                        <button
+                          key={option.value}
+                          onClick={() => handleLanguageChange(option)}
+                          className={`m-1 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                            ${selectedLanguage === option.value
+                              ? "bg-blue-500 text-white hover:bg-blue-600"
+                              : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                            }`}
+                        >
+                          {option.label}
+                        </button>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+    
+            <hr className="w-full  px-4 mt-20 border-t-4 pt-8 border-black dark:border-white"></hr>
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {filteredLanguages.map((item) => (
                 <div
                   key={item.id}
-                  className=" rounded-md overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105 bg-gray-300 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 backdrop-filter backdrop-blur-lg"
+                  className=" rounded-lg overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105 bg-gray-300 bg-opacity-50 dark:bg-gray-800 dark:bg-opacity-50 backdrop-filter backdrop-blur-lg"
                   onClick={() => handlePublicationClick(item)}
                 >
                   {formattedSelectedDate && (
@@ -363,7 +349,6 @@ const Pages = () => {
               ))}
             </div>
           </div>
-        </div>
         {/* PDF UI */}
         {selectedPublication && (
           <PDFViewer

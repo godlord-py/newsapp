@@ -14,28 +14,37 @@ const Newspaper3D: React.FC = () => {
         // Set up the scene, camera, and renderer
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setClearColor(theme === 'dark' ? 0x111010 : 0xffffff);
         renderer.setSize(window.innerWidth, window.innerHeight);
         mountRef.current?.appendChild(renderer.domElement);
         rendererRef.current = renderer;
 
-        // Create the book shape
+        // Add ambient light
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.8); // Increase intensity for more brightness
+        scene.add(ambientLight);
+
+        // Add a directional light to create shadows and depth
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5); // Increase intensity
+        directionalLight.position.set(5, 10, 10);
+        scene.add(directionalLight);
+
+        // Create the book group
         const bookGroup = new THREE.Group();
 
-        // Left page
-        const leftGeometry = new THREE.PlaneGeometry(7, 10);
-        const leftMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        // Create the left page
+        const leftGeometry = new THREE.PlaneGeometry(8, 12);
+        const leftMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.1, metalness: 0.1 });
         const leftPage = new THREE.Mesh(leftGeometry, leftMaterial);
-        leftPage.position.x = -2.05; // Adjust position to the left
-        leftPage.rotation.y = Math.PI * 0.05; // Slightly rotate to simulate an open book
+        leftPage.position.x = -3.55; // Adjust position to the left
+        leftPage.rotation.y = Math.PI * 0.1; // Slightly rotate to simulate an open book
 
-        // Right page
-        const rightGeometry = new THREE.PlaneGeometry(7, 10);
-        const rightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        // Create the right page
+        const rightGeometry = new THREE.PlaneGeometry(8, 12);
+        const rightMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.1, metalness: 0.1 });
         const rightPage = new THREE.Mesh(rightGeometry, rightMaterial);
-        rightPage.position.x = 4.6; // Adjust position to the right
-        rightPage.rotation.y = -Math.PI * 0.05; // Slightly rotate to simulate an open book
+        rightPage.position.x = 3.55; // Adjust position to the right
+        rightPage.rotation.y = -Math.PI * 0.1; // Slightly rotate to simulate an open book
 
         // Add pages to the book group
         bookGroup.add(leftPage);
@@ -56,7 +65,7 @@ const Newspaper3D: React.FC = () => {
         });
 
         // Position the camera
-        camera.position.z = 10;
+        camera.position.z = 12;
 
         // Variables for mouse movement
         let mouseX = 0;
@@ -129,7 +138,7 @@ const Newspaper3D: React.FC = () => {
     // Update the renderer's background color when theme changes
     useEffect(() => {
         if (rendererRef.current) {
-            rendererRef.current.setClearColor(theme === 'dark' ? 0x111010 : 0xffffff);
+            rendererRef.current.setClearColor(theme === 'dark' ? 0x111010 : 0xf7fafc);
         }
     }, [theme]);
 

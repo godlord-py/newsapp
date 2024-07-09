@@ -11,7 +11,7 @@ const FirstPage = () => {
   const isMobile = window.innerWidth <= 600; 
   return (
     <>
-      <div className="dark:bg-[#111010] w-full min-h-screen relative overflow-x-hidden">
+      <div className="dark:bg-[#111010] bg-gray-100 w-full min-h-screen relative overflow-x-hidden">
         <div className="blurup"></div>
         <div className="text1 p-10 ml-14 mt-1 text-black font-bold dark:text-slate-200">
           #DAILY NEWS
@@ -43,10 +43,6 @@ const FirstPage = () => {
             Stay informed with the latest news updates! Stay informed with the latest news updates! Stay informed with the latest news!
           </div>
         </div>
-        {/* <img
-          src={NewspaperImage}
-          className={`newspaper-image absolute mt-10 right-32 w-1/4 h-3/5 object-cover z-20 top-14 mr-20 rounded-lg shadow-md transition-transform hover:scale-105`}
-        /> */}
         {!isMobile && <Newspaper3D/>}
         <div className="blurdown"></div>
       </div>

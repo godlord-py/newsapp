@@ -53,7 +53,7 @@ const NewsFeed: React.FC = () => {
   return (
     <>
       <div className="dark:bg-[#111010] container mx-auto py-8">
-        <h2 className="text-6xl font-bold mb-4 text-center font-serif">Latest News</h2>
+        <h2 className="text-6xl dark:bg-[#111010] font-bold mb-4 text-center font-serif">Latest News</h2>
         <div className="mb-4">
           <input
             type="text"
@@ -141,7 +141,7 @@ const NewsFeed: React.FC = () => {
           ))}
         </div>
       
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 ">
           {filteredNews.map((article, index) => (
             <a key={index} href={article.url} target="_blank" rel="noopener noreferrer" className="p-4 border rounded-lg block dark:hover:bg-slate-900 hover:bg-gray-100">
               <h3 className="text-xl font-bold mb-2">{article.title}</h3>

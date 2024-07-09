@@ -49,6 +49,8 @@ const NavBar = () => {
         </NavbarItem>
       </NavbarContent>
       
+    
+      
       
       <NavbarContent className='flex justify-end align-end'>
         <ThemeToggle
@@ -79,17 +81,3 @@ const NavBar = () => {
 
 export default NavBar;
 
-
-
-
-        {/* <NavbarItem>
-          {router.basename !== '/latestnews' && (
-          <Link onClick={scrollTo} aria-current="page">News</Link>
-          )}
-        </NavbarItem> */}
-        {/* <NavbarItem>
-        <Link href='/latestnews' aria-current="page" className="relative">
-          <span className="animate-pulse absolute h-2.5 w-2.5 bg-red-600 dark:bg-green-500 rounded-full top-1/2 transform -translate-y-1/3 ml-1 left-full mr-2"></span>
-          Latest News
-        </Link>
-      </NavbarItem> */}

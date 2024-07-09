@@ -32,13 +32,13 @@
       "type": "newspaper",
       "imageUrl": "/newspaper image/NewIndianExpress.webp",
       "dates": [
-        "2024-05-08",
-        "2024-05-09"
+        "2024-05-09",
+        "2024-06-03"
       ],
       "pdfFiles": [
         {
-          "date": "2024-05-08",
-          "path": "/newspapers/8/5/24/NIE Chennai 08.05.2024.pdf"
+          "date": "2024-06-03",
+          "path": "pdf path"
         }
       ],
       "language": "English"
@@ -311,6 +311,214 @@
         {
           "date": "2024-07-03",
           "path": "/newspapers/2024-07-03/M7.pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 20,
+      "name": "Test Paper",
+      "type": "newspaper",
+      "imageUrl": "wfwfwf",
+      "dates": [
+        "2024-07-03"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-07-03",
+          "path": "/newspapers/2024-07-03/PDF.pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 21,
+      "name": "Test Paper2",
+      "type": "newspaper",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwkEgtyr76H_aMmykOeab7BmI-mFjJS-ImXg&s",
+      "dates": [
+        "2024-07-04"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-07-04",
+          "path": "/newspapers/2024-07-04/M7.pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 22,
+      "name": "Ayush Pathak",
+      "type": "newspaper",
+      "imageUrl": "sw",
+      "dates": [
+        "2024-06-28"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-06-28",
+          "path": "/newspapers/2024-06-28/M7.pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 23,
+      "name": "Ayush Pathak",
+      "type": "newspaper",
+      "imageUrl": "sw",
+      "dates": [
+        "2024-07-06"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-07-06",
+          "path": "/newspapers/2024-07-06/M7.pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 24,
+      "name": "wfwfwfwfwfwfwfwf",
+      "type": "newspaper",
+      "imageUrl": "qwefqwfqwfqwfqwf",
+      "dates": [
+        "2024-07-05"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-07-05",
+          "path": "/newspapers/2024-07-05/M7.pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 25,
+      "name": "efefe",
+      "type": "newspaper",
+      "imageUrl": "wfwf",
+      "dates": [
+        "2024-07-06"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-07-06",
+          "path": "/newspapers/2024-07-06/WD-401 MILESTONE LEVEL 8 SUBMISSION _ .pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 26,
+      "name": "efefe2",
+      "type": "newspaper",
+      "imageUrl": "wfwfwf",
+      "dates": [
+        "2024-06-18"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-06-18",
+          "path": "/newspapers/2024-06-18/MILESTONE 1 RESUBMISSION.pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 27,
+      "name": "Ayus Pat",
+      "type": "newspaper",
+      "imageUrl": "fwfw",
+      "dates": [
+        "2024-06-26"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-06-26",
+          "path": "/newspapers/2024-06-26/LEVEL 3 MILESTONE_.pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 28,
+      "name": "ffq",
+      "type": "newspaper",
+      "imageUrl": "qwfq",
+      "dates": [
+        "2024-06-11"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-06-11",
+          "path": "/newspapers/2024-06-11/CTGH23CSE32 .pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 29,
+      "name": "As",
+      "type": "newspaper",
+      "imageUrl": "fw",
+      "dates": [
+        "2024-06-06"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-06-06",
+          "path": "/newspapers/2024-06-06/LEVEL 3 MILESTONE_.pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 30,
+      "name": "fwfw",
+      "type": "newspaper",
+      "imageUrl": "wffw",
+      "dates": [
+        "2024-06-19"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-06-19",
+          "path": "/newspapers/2024-06-19/LEVEL 3 MILESTODNE_.pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 31,
+      "name": "fwfw",
+      "type": "newspaper",
+      "imageUrl": "wffw",
+      "dates": [
+        "2024-06-25"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-06-25",
+          "path": "/newspapers/2024-06-25/LEVEL 3 MILESTONE_.pdf"
+        }
+      ],
+      "language": "English"
+    },
+    {
+      "id": 32,
+      "name": "React Roles",
+      "type": "newspaper",
+      "imageUrl": "wffw",
+      "dates": [
+        "2024-07-06"
+      ],
+      "pdfFiles": [
+        {
+          "date": "2024-07-06",
+          "path": "/newspapers/2024-07-06/LEVEL 3 MILESTONE_.pdf"
         }
       ],
       "language": "English"

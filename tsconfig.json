@@ -15,5 +15,5 @@
     "downlevelIteration": true,
     "allowImportingTsExtensions": true,
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "env.d.ts", "src/components/newsffilter.sx", "vite-env.d.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "env.d.ts", "src/components/newsffilter.sx", "vite-env.d.ts", "src/components/newstwo.jsx"]
 }
