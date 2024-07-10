@@ -59,8 +59,8 @@ app.get('/', (req, res) => {
   res.send('Backend is working!');
 });
 
-app.listen(3000, () => {
-  console.log('Server running on 3000');
+app.listen(3006, () => {
+  console.log('Server running on 3006');
 });
 
 app.post('/api/signin', (req, res) => {
