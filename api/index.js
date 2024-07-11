@@ -52,16 +52,8 @@ app.use(cors({
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const newspapersFilePath = path.join(__dirname, '../public', 'newspapers.json');
+const newspapersFilePath = path.join(__dirname,  'newspapers.json');
 console.log('Configuring multer...');
-
-app.get('/', (req, res) => {
-  res.send('Backend is working!');
-});
-
-app.listen(3006, () => {
-  console.log('Server running on 3006');
-});
 
 app.post('/api/signin', (req, res) => {
   const { username, password } = req.body;
@@ -106,7 +98,25 @@ const verifyToken = (req, res, next) => {
   });
 };
 
+app.get('/api/newspapers', (req, res) => {
+  const filePath = path.join(__dirname, 'newspapers.json');
 
+  // Read the JSON file and send it as response
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+    try {
+      const newspapers = JSON.parse(data);
+      res.json(newspapers);
+    } catch (parseError) {
+      console.error('Error parsing JSON:', parseError);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+});
 
 app.use('/api/admin', verifyToken);
 
@@ -317,6 +327,10 @@ app.post('/api/add-publication-date', verifyToken, (req, res) => {
   });
 });
 
+app.get('/', (req, res) => {
+  res.send('Backend is working!');
+});
 
-
-export default app;
+app.listen(3006, () => {
+  console.log('Server running on http://localhost:3006');
+});

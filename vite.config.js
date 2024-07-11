@@ -6,11 +6,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://api.coresignal.com',
+        target: 'http://localhost:3006',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
         secure: false,
-      }
+      },
     }
   }
 })

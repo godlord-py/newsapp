@@ -25,6 +25,7 @@ const Pages = () => {
   const [scrolled, setScrolled] = useState(false);
   const [passedDate, setPassedDate] = useState(null);
   const [thumbnails, setThumbnails] = useState({});
+  const [newspapers, setNewspapers] = useState([]);
   const isMobile = window.innerWidth <= 600;
   
   const renderPdfThumbnail = async (pdfUrl) => {
@@ -61,7 +62,7 @@ const Pages = () => {
   
   
   useEffect(() => {
-    fetchPublications();
+   
     AOS.init({
       duration: 1000,
       once: false,
@@ -99,20 +100,25 @@ const Pages = () => {
       document.body.style.overflow = 'unset';
     };
   }, [selectedPublication]);
-
-  const fetchPublications = async () => {
-    try {
-      const response = await fetch("/newspapers.json");
-      const data = await response.json();
-      setPublications(data.newspapers.concat(data.magazines));
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching publications:", error);
-      setLoading(false);
-    }
-  };
-
   
+  useEffect(() => {
+    const fetchPublications = async () => {
+      try {
+        const response = await fetch('/api/newspapers');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setPublications(data.newspapers.concat(data.magazines));
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching publications:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchPublications();
+  }, []);
 
   const handlePublicationClick = (publication) => {
     setSelectedPublication(publication);

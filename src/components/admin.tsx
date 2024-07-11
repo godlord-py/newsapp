@@ -1,5 +1,4 @@
   import React, { useState, useEffect } from 'react';
-  import publicationsData from '/home/godlord/news/newsapp/public/newspapers.json';
   import Dashboard from './Dashboard/dashboard';
   import { useNavigate } from 'react-router-dom';
 
