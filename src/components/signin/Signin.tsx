@@ -19,7 +19,7 @@ const SignInPage: React.FC<SignInPageProps> = ({ setIsLoggedIn }) => {
     e.preventDefault();
     setLoading(true);
     try {
-        const response = await fetch('http://localhost:3000/api/signin', {
+        const response = await fetch('https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ const fetchProtectedResource = async () => {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/api/protected', {
+        const response = await fetch('https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/protected', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,

@@ -14,7 +14,7 @@
     const [language, setLanguage] = useState('English');
     const [date, setDate] = useState('');
     const [file, setFile] = useState(null); 
-    const [publications, setPublications] = useState(publicationsData);
+    const [publications, setPublications] = useState([]);
     const [selectedPublication, setSelectedPublication] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -38,6 +38,24 @@
     }
   }, []);
 
+  useEffect(() => {
+    const fetchPublications = async () => {
+      try {
+        const response = await fetch('/api/newspapers');
+        if (!response.ok) {
+          throw new Error('Failed to fetch publications');
+        }
+        const data = await response.json();
+        setPublications(data);
+      } catch (error) {
+        console.error('Error fetching publications:', error);
+        // Handle error state or logging as needed
+      }
+    };
+
+    fetchPublications();
+  }, []); 
+
     const handlePublicationClick = (publication, type) => {
       setSelectedPublication(publication);
       setSelectedType(type);
@@ -60,7 +78,7 @@
       try {
         const token = localStorage.getItem('authToken');
         console.log('Token being sent:', token);
-        const response = await fetch('http://localhost:3000/api/add-publication-date', {
+        const response = await fetch('https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/add-publication-date', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -110,7 +128,7 @@
       if (window.confirm(`Are you sure you want to delete the issue for ${date}?`)) {
         try {
           const token = localStorage.getItem('authToken');
-          const response = await fetch(`http://localhost:3000/api/delete-publication-date`, {
+          const response = await fetch(`https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/delete-publication-date`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
@@ -153,7 +171,7 @@
   const handleSaveEdit = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`http://localhost:3000/api/update-publication-pdf`, {
+      const response = await fetch(`https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/update-publication-pdf`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -244,7 +262,7 @@
       try {
         console.log('Sending data:', { name, date, file }); 
         const token = localStorage.getItem('authToken');
-        const uploadResponse = await fetch('http://localhost:3000/api/upload', {
+        const uploadResponse = await fetch('https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/upload', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -272,7 +290,7 @@
 
         console.log('Sending publication data:', newPublication);
 
-        const response = await fetch('http://localhost:3000/api/add-publication', {
+        const response = await fetch('https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/add-publication', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

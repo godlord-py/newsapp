@@ -24,22 +24,27 @@ app.use(cookieParser());
 
 // Middleware to verify JWT token
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'https://6690170c24005d1b39dfcf30--thriving-hotteok-03030a.netlify.app'
+];
+
+// Setup helmet middleware with CSP and other security headers
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173"],
-      scriptSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "'unsafe-inline'"],
-      styleSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "'unsafe-inline'"],
+      defaultSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "https://6690170c24005d1b39dfcf30--thriving-hotteok-03030a.netlify.app"],
+      scriptSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "'unsafe-inline'", "https://6690170c24005d1b39dfcf30--thriving-hotteok-03030a.netlify.app"],
+      styleSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "'unsafe-inline'", "https://6690170c24005d1b39dfcf30--thriving-hotteok-03030a.netlify.app"],
       fontSrc: ["'self'", 'data:'],
       imgSrc: ["'self'", 'data:'],
-      connectSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173"],
+      connectSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "https://6690170c24005d1b39dfcf30--thriving-hotteok-03030a.netlify.app"],
       mediaSrc: ["'self'"],
       frameSrc: ["'self'"]
     }
   }
 }));
-
-const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173'];
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {

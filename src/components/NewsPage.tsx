@@ -104,7 +104,7 @@ const Pages = () => {
   useEffect(() => {
     const fetchPublications = async () => {
       try {
-        const response = await fetch('/api/newspapers');
+        const response = await fetch('https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/newspapers');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -116,9 +116,10 @@ const Pages = () => {
         setLoading(false);
       }
     };
-
+  
     fetchPublications();
   }, []);
+  
 
   const handlePublicationClick = (publication) => {
     setSelectedPublication(publication);
