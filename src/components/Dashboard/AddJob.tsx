@@ -23,7 +23,7 @@ const AddJobPage = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await fetch('http://localhost:3001/api/jobs');
+      const response = await fetch('https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/jobs');
       if (response.ok) {
         const data = await response.json();
         setJobs(data);
@@ -49,7 +49,7 @@ const AddJobPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3001/api/jobs', {
+      const response = await fetch('https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/jobs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ const AddJobPage = () => {
   const handleDelete = async (jobId) => {
     if (window.confirm('Are you sure you want to delete this job?')) {
       try {
-        const response = await fetch(`http://localhost:3001/api/jobs/${jobId}`, {
+        const response = await fetch(`https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/jobs/${jobId}`, {
           method: 'DELETE',
         });
         if (response.ok) {
