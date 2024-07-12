@@ -41,7 +41,7 @@
   useEffect(() => {
     const fetchPublications = async () => {
       try {
-        const response = await fetch('/api/newspapers');
+        const response = await fetch('https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/newspapers');
         if (!response.ok) {
           throw new Error('Failed to fetch publications');
         }
