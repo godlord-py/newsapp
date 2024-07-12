@@ -27,19 +27,19 @@ app.use(cookieParser());
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
-  'https://6690f05abd7c20f466422ef6--thriving-hotteok-03030a.netlify.app/'
+  'https://6690f05abd7c20f466422ef6--thriving-hotteok-03030a.netlify.app'
 ];
 
 // Setup helmet middleware with CSP and other security headers
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "https://6690f05abd7c20f466422ef6--thriving-hotteok-03030a.netlify.app/"],
-      scriptSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "'unsafe-inline'", "https://6690f05abd7c20f466422ef6--thriving-hotteok-03030a.netlify.app/"],
-      styleSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "'unsafe-inline'", "https://6690f05abd7c20f466422ef6--thriving-hotteok-03030a.netlify.app/"],
+      defaultSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "https://6690f05abd7c20f466422ef6--thriving-hotteok-03030a.netlify.app"],
+      scriptSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "'unsafe-inline'", "https://6690f05abd7c20f466422ef6--thriving-hotteok-03030a.netlify.app"],
+      styleSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "'unsafe-inline'", "https://6690f05abd7c20f466422ef6--thriving-hotteok-03030a.netlify.app"],
       fontSrc: ["'self'", 'data:'],
       imgSrc: ["'self'", 'data:'],
-      connectSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "https://6690f05abd7c20f466422ef6--thriving-hotteok-03030a.netlify.app/"],
+      connectSrc: ["'self'", "http://localhost:5173", "http://127.0.0.1:5173", "https://6690f05abd7c20f466422ef6--thriving-hotteok-03030a.netlify.app"],
       mediaSrc: ["'self'"],
       frameSrc: ["'self'"]
     }
