@@ -12,7 +12,7 @@ const JobsLayout = () => {
   }, []);
 
   const fetchJobs = () => {
-    fetch('http://localhost:3001/api/jobs')
+    fetch('https://newsappcode1971694234svsvasvasvsavwefwff.onrender.com/api/jobs')
       .then(response => response.json())
       .then(data => setJobs(data))
       .catch(error => console.error('Error fetching jobs:', error));
