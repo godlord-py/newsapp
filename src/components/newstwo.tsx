@@ -132,22 +132,6 @@ const Newsworld: React.FC = () => {
           <p className="text-center text-lg col-span-full text-gray-600 dark:text-gray-400">No news available at the moment.</p>
         )}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-        {latestNews.length > 0 ? (
-          latestNews.map((item, index) => (
-            <a key={index} href={item.link} target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
-              <h3 className="text-xl font-bold p-4 text-gray-800 dark:text-white">{item.title}</h3>
-              <img src={item.image_url} alt={item.title} className="w-full h-48 object-cover" />
-              <p className="p-4 text-gray-600 dark:text-gray-300">
-                {item.description ? item.description.split(' ').slice(0, 30).join(' ') : ''}
-              </p>
-            </a>
-          ))
-        ) : (
-          <p className="text-center text-lg col-span-full text-gray-600 dark:text-gray-400">No latest news available at the moment.</p>
-        )}
-      </div>
-  
       <div className="flex justify-center mt-8 space-x-4">
         <button
           className={`px-6 py-2 bg-blue-500 text-white rounded-md ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}
@@ -164,7 +148,23 @@ const Newsworld: React.FC = () => {
           Next
         </button>
       </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        {latestNews.length > 0 ? (
+          latestNews.map((item, index) => (
+            <a key={index} href={item.link} target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+              <h3 className="text-xl font-bold p-4 text-gray-800 dark:text-white">{item.title}</h3>
+              <img src={item.image_url} alt={item.title} className="w-full h-48 object-cover" />
+              <p className="p-4 text-gray-600 dark:text-gray-300">
+                {item.description ? item.description.split(' ').slice(0, 30).join(' ') : ''}
+              </p>
+            </a>
+          ))
+        ) : (
+          <p className="text-center text-lg col-span-full text-gray-600 dark:text-gray-400">No latest news available at the moment.</p>
+        )}
+      </div>
   
+     
       <div className="flex justify-center mt-4">
         <button
           className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
