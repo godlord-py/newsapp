@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import JobCard from '/home/godlord/news/newsapp/src/components/UI/cards';
 import "/home/godlord/news/newsapp/src/styles/jobs.css";
-import { Link } from 'react-router-dom'; // Import Link if you're using React Router
+
 
 const JobsLayout = () => {
   const [filter, setFilter] = useState('all');

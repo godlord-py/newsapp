@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "React Js Intern",
+    "company": "jobwebsite.org",
+    "description": "Need React js Intern with good knowledge of DOM Manipulation, react-router-dom, React State, React Components, React Redux, etc.",
+    "logoUrl": "https://example.com/logo1.png",
+    "applyUrl": "https://www.jobwebsite.org/apply",
+    "type": "private"
+  },
+  {
+    "id": 2,
+    "title": "Government Software Engineer",
+    "company": "Government IT Department",
+    "description": "Looking for a software engineer to work on government projects.",
+    "logoUrl": "https://example.com/logo2.png",
+    "applyUrl": "https://www.governmentjobs.com/apply",
+    "type": "government"
+  },
+  {
+    "title": "Need AIML engineer",
+    "company": "Company ka nam",
+    "description": "must have made pac man game",
+    "logoUrl": "https://fwfwfwf.com",
+    "applyUrl": "https://fwfwfwf.com",
+    "type": "private",
+    "id": 3
+  }
+]
