@@ -1,5 +1,5 @@
 import multer from 'multer';
-import PdfFile from '/home/godlord/news/newsapp/models/PdfFile..js'; // Adjust the import path as needed
+import PdfFile from '../models/PdfFile..js'; // Adjust the import path as needed
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
