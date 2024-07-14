@@ -8,9 +8,6 @@ import cors from 'cors';
 import multer from 'multer';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
-import { sequelize } from '../config/database.js'; // Adjust the import path as needed
-import { upload, uploadFile } from '../api/upload.js'; // Adjust the import path as needed
-import newspaperRoutes from '../routes/newspaperRoutes.js';
 
 console.log('Server starting...');
 
@@ -22,10 +19,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(cookieParser());
-app.use('/api/newspapers', newspaperRoutes);
-app.use('/uploads', express.static('uploads')); // Serve the uploaded files
 
-app.post('/upload', upload.single('pdf'), uploadFile);
 
 
 // Middleware to verify JWT token
@@ -252,7 +246,6 @@ app.post('/api/upload', (req, res) => {
   });
 });
 
-
 app.post('/api/add-publication', verifyToken, (req, res) => {
   const newPublicationData = req.body;
   console.log('Received request to add publication:', req.body);
@@ -404,7 +397,6 @@ app.get('/', (req, res) => {
   res.send('Backend is working!');
 });
 
-app.listen(3006, async () => {
-  console.log(`Server running on port 3006`);
-  await sequelize.sync();
+app.listen(3006, () => {
+  console.log('Server running on http://localhost:3006');
 });
