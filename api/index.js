@@ -170,7 +170,7 @@ app.delete('/api/jobs/:id', (req, res) => {
 });
 
 
-app.get('/api/newspapers',verifyToken, (req, res) => {
+app.get('/api/newspapers', (req, res) => {
   const filePath = path.join(__dirname, 'newspapers.json');
 
   // Read the JSON file and send it as response
@@ -197,18 +197,28 @@ app.post('/api/upload', (req, res) => {
 
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      const uploadDir = path.join('/var/lib/render/uploads'); // Use Render's storage path
+      console.log('Multer destination function called');
+      console.log('req.body:', req.body);
+      // Use a temporary path first
+      const uploadDir = path.join(__dirname, '../public/newspapers/temp');
       fs.mkdirSync(uploadDir, { recursive: true });
       cb(null, uploadDir);
     },
     filename: function (req, file, cb) {
-      cb(null, file.originalname); // Keep original filename or modify as needed
+      console.log('Multer filename function called');
+      cb(null, file.originalname);
     }
   });
 
   const upload = multer({ storage: storage });
 
   upload.single('file')(req, res, function (err) {
+    console.log('Multer middleware completed');
+    console.log('Received upload request');
+    console.log('Headers:', req.headers);
+    console.log('Body:', req.body);
+    console.log('File:', req.file);
+
     if (err) {
       console.error('Upload error:', err);
       return res.status(400).json({ message: err.message });
@@ -218,11 +228,27 @@ app.post('/api/upload', (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    // Handle saving PDF details to your database here
-    const filePath = `/uploads/${req.file.filename}`; // Adjust as necessary
-    // Example: save the filePath to the PostgreSQL database
+    if (!req.body.date) {
+      return res.status(400).json({ message: 'Date is required' });
+    }
 
-    res.status(200).json({ message: 'File uploaded successfully', path: filePath });
+    if (!req.body.name) {
+      return res.status(400).json({ message: 'Name is required' });
+    }
+
+    const { date, name } = req.body;
+    
+    // Move the file to the correct directory
+    const finalDir = path.join(__dirname, '../public/newspapers', date);
+    fs.mkdirSync(finalDir, { recursive: true });
+    const finalPath = path.join(finalDir, req.file.filename);
+    fs.renameSync(req.file.path, finalPath);
+
+    res.status(200).json({ 
+      message: 'File uploaded successfully', 
+      path: `/newspapers/${date}/${req.file.filename}`,
+      receivedData: { date, name, fileName: req.file.filename }
+    });
   });
 });
 
