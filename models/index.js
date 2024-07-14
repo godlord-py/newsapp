@@ -1,6 +1,6 @@
-import Newspaper from '/home/godlord/news/newsapp/models/Newspaper..js';
-import NewspaperDate from '/home/godlord/news/newsapp/models/NewspaperDate..js';
-import PdfFile from '/home/godlord/news/newsapp/models/PdfFile..js';
+import Newspaper from '../models/Newspaper..js';
+import NewspaperDate from '../models/NewspaperDate..js';
+import PdfFile from '../models/PdfFile..js';
 
 // Associations
 Newspaper.hasMany(NewspaperDate, { foreignKey: 'newspaper_id' });

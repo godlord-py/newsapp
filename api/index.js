@@ -8,9 +8,9 @@ import cors from 'cors';
 import multer from 'multer';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
-import { sequelize } from '/home/godlord/news/newsapp/config/database.js'; // Adjust the import path as needed
-import { upload, uploadFile } from '/home/godlord/news/newsapp/api/upload.js'; // Adjust the import path as needed
-import newspaperRoutes from '/home/godlord/news/newsapp/routes/newspaperRoutes.js'; // Adjust the import path as 
+import { sequelize } from '../config/database.js'; // Adjust the import path as needed
+import { upload, uploadFile } from '../api/upload.js'; // Adjust the import path as needed
+import newspaperRoutes from '../routes/newspaperRoutes.js';
 
 
 
