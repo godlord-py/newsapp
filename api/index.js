@@ -174,7 +174,7 @@ app.delete('/api/jobs/:id', (req, res) => {
 });
 
 
-app.get('/api/newspapers', verifyToken,  (req, res) => {
+app.get('/api/newspapers',   (req, res) => {
   const filePath = path.join(__dirname, 'newspapers.json');
   // Read the JSON file and send it as response
   fs.readFile(filePath, 'utf8', (err, data) => {
