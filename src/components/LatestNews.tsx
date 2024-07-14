@@ -1,13 +1,11 @@
 // import React, { useEffect, useState } from 'react';
 // import NavBar from '../layouts/Navbar';
-// import VITE_NEWS_API_KEY from '/home/godlord/news/newsapp/.env';
 
 // const NewsFeed: React.FC = () => {
 //   const [newsData, setNewsData] = useState<any[]>([]);
 //   const [searchTerm, setSearchTerm] = useState<string>('');
 //   const [filterBySource, setFilterBySource] = useState<string>('');
 //   const [selectedCountry, setSelectedCountry] = useState<string>('in'); // Default country is India
-// //   const apiKey = import.meta.env.VITE_NEWS_API_KEY;
 //     const apiKey = "cec30f314b0d40a5acbec1e7f2bc521e";
 
 //   useEffect(() => {
