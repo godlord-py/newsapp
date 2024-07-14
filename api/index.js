@@ -12,8 +12,6 @@ import { sequelize } from '../config/database.js'; // Adjust the import path as 
 import { upload, uploadFile } from '../api/upload.js'; // Adjust the import path as needed
 import newspaperRoutes from '../routes/newspaperRoutes.js';
 
-
-
 console.log('Server starting...');
 
 const SECRET_KEY = 'ewgwegegwegegegqwfqwfwhuohp;wfhjipwhfwfwldfuqwfwfwwqfwf';
@@ -35,8 +33,6 @@ app.post('/upload', upload.single('pdf'), uploadFile);
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
-  'https://6690f69e767262054b9e01c6--thriving-hotteok-03030a.netlify.app',
-  'https://6690f69e767262054b9e01c6--thriving-hotteok-03030a.netlify.app/admin',
   'https://6690f69e767262054b9e01c6--thriving-hotteok-03030a.netlify.app'
 ];
 
@@ -174,8 +170,9 @@ app.delete('/api/jobs/:id', (req, res) => {
 });
 
 
-app.get('/api/newspapers',   (req, res) => {
+app.get('/api/newspapers',verifyToken, (req, res) => {
   const filePath = path.join(__dirname, 'newspapers.json');
+
   // Read the JSON file and send it as response
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
@@ -197,7 +194,7 @@ app.use('/api/admin', verifyToken);
 
 app.post('/api/upload', (req, res) => {
   console.log('Upload route hit');
-  console.log('Request body:', req.body);
+
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       const uploadDir = path.join('/var/lib/render/uploads'); // Use Render's storage path
