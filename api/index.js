@@ -9,6 +9,7 @@ import multer from 'multer';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import { Sequelize, DataTypes } from 'sequelize';
+import { Pool } from 'pg';
 
 console.log('Server starting...');
 const sequelize = new Sequelize('newspapers_db', 'newspapers_db_user', 'L9iunDPwM3D9EUElE9YQ64bXb1dJbKt2', {
@@ -44,9 +45,18 @@ const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'password';
 
 const app = express();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(cookieParser());
+
+const pool = new Pool({
+  user: 'newspapers_db_user',
+  host: 'singapore-postgres.render.com',
+  database: 'newspapers_db',
+  password: 'L9iunDPwM3D9EUElE9YQ64bXb1dJbKt2',
+  port: 5432,
+});
 
 
 
@@ -193,53 +203,53 @@ app.delete('/api/jobs/:id', (req, res) => {
 });
 
 
-app.get('/api/newspapers', (req, res) => {
-  const filePath = path.join(__dirname, 'newspapers.json');
+// app.get('/api/newspapers', (req, res) => {
+//   const filePath = path.join(__dirname, 'newspapers.json');
 
-  // Read the JSON file and send it as response
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error reading file:', err);
-      return res.status(500).json({ error: 'Internal Server Error' });
-    }
+//   // Read the JSON file and send it as response
+//   fs.readFile(filePath, 'utf8', (err, data) => {
+//     if (err) {
+//       console.error('Error reading file:', err);
+//       return res.status(500).json({ error: 'Internal Server Error' });
+//     }
 
-    try {
-      const newspapers = JSON.parse(data);
-      res.json(newspapers);
-    } catch (parseError) {
-      console.error('Error parsing JSON:', parseError);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  });
+//     try {
+//       const newspapers = JSON.parse(data);
+//       res.json(newspapers);
+//     } catch (parseError) {
+//       console.error('Error parsing JSON:', parseError);
+//       res.status(500).json({ error: 'Internal Server Error' });
+//     }
+//   });
+// });
+app.get('/api/newspapers', async (req, res) => {
+  try {
+      const result = await pool.query(`
+          SELECT n.id, n.name, n.type, n.imageUrl, n.language, 
+                 json_agg(json_build_object('date', p.date, 'path', p.path)) AS pdfFiles
+          FROM newspapers n
+          LEFT JOIN pdf_files p ON n.id = p.newspaper_id
+          GROUP BY n.id
+      `);
+      res.json(result.rows);
+  } catch (error) {
+      res.status(500).json({ error: 'Error fetching newspapers from database' });
+  }
 });
-
 app.use('/api/admin', verifyToken);
 
-app.post('/api/upload', upload.single('file'), async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ message: 'No file uploaded' });
-  }
-
-  if (!req.body.date) {
-    return res.status(400).json({ message: 'Date is required' });
-  }
-
-  const { date } = req.body;
+app.post('/upload', upload.single('pdf'), async (req, res) => {
+  const { newspaperId, date } = req.body;
+  const filePath = path.join('uploads', req.file.filename);
 
   try {
-    // Store PDF metadata in the database
-    const pdfFile = await PdfFile.create({
-      date: new Date(date),
-      path: req.file.originalname, // Store the original name or path as necessary
-    });
-
-    res.status(200).json({
-      message: 'File uploaded successfully',
-      file: pdfFile,
-    });
+      const result = await pool.query(
+          'INSERT INTO pdf_files (newspaper_id, date, path) VALUES ($1, $2, $3) RETURNING id',
+          [newspaperId, date, filePath]
+      );
+      res.status(201).json({ id: result.rows[0].id });
   } catch (error) {
-    console.error('Error saving PDF file:', error);
-    res.status(500).json({ message: 'Error saving PDF file' });
+      res.status(500).json({ error: 'Error saving PDF to database' });
   }
 });
 app.get('/api/pdfs', async (req, res) => {
