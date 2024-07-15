@@ -8,8 +8,36 @@ import cors from 'cors';
 import multer from 'multer';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
+import { Sequelize, DataTypes } from 'sequelize';
 
 console.log('Server starting...');
+const sequelize = new Sequelize('newspapers_db', 'newspapers_db_user', 'L9iunDPwM3D9EUElE9YQ64bXb1dJbKt2', {
+  host: 'singapore-postgres.render.com',
+  dialect: 'postgres',
+  port: 5432, 
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false // Change to true if you have a valid certificate
+    }
+  }
+});
+
+const PdfFile = sequelize.define('PdfFile', {
+  date: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  path: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+}, {
+  timestamps: true,
+});
+
+// Sync the models with the database
+sequelize.sync();
 
 const SECRET_KEY = 'ewgwegegwegegegqwfqwfwhuohp;wfhjipwhfwfwldfuqwfwfwwqfwf';
 const ADMIN_USERNAME = 'admin';
@@ -60,7 +88,8 @@ const __dirname = path.dirname(__filename);
 
 const newspapersFilePath = path.join(__dirname,  'newspapers.json');
 const jobsFilePath = path.join(__dirname, 'jobs.json');
-
+const storage = multer.memoryStorage(); // Use memory storage
+const upload = multer({ storage: storage });
 
 console.log('Configuring multer...');
 
@@ -186,64 +215,41 @@ app.get('/api/newspapers', (req, res) => {
 
 app.use('/api/admin', verifyToken);
 
-app.post('/api/upload', (req, res) => {
-  console.log('Upload route hit');
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
 
-  const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      console.log('Multer destination function called');
-      console.log('req.body:', req.body);
-      // Use a temporary path first
-      const uploadDir = path.join(__dirname, '../public/newspapers/temp');
-      fs.mkdirSync(uploadDir, { recursive: true });
-      cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-      console.log('Multer filename function called');
-      cb(null, file.originalname);
-    }
-  });
+  if (!req.body.date) {
+    return res.status(400).json({ message: 'Date is required' });
+  }
 
-  const upload = multer({ storage: storage });
+  const { date } = req.body;
 
-  upload.single('file')(req, res, function (err) {
-    console.log('Multer middleware completed');
-    console.log('Received upload request');
-    console.log('Headers:', req.headers);
-    console.log('Body:', req.body);
-    console.log('File:', req.file);
-
-    if (err) {
-      console.error('Upload error:', err);
-      return res.status(400).json({ message: err.message });
-    }
-
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
-
-    if (!req.body.date) {
-      return res.status(400).json({ message: 'Date is required' });
-    }
-
-    if (!req.body.name) {
-      return res.status(400).json({ message: 'Name is required' });
-    }
-
-    const { date, name } = req.body;
-    
-    // Move the file to the correct directory
-    const finalDir = path.join(__dirname, '../public/newspapers', date);
-    fs.mkdirSync(finalDir, { recursive: true });
-    const finalPath = path.join(finalDir, req.file.filename);
-    fs.renameSync(req.file.path, finalPath);
-
-    res.status(200).json({ 
-      message: 'File uploaded successfully', 
-      path: `/newspapers/${date}/${req.file.filename}`,
-      receivedData: { date, name, fileName: req.file.filename }
+  try {
+    // Store PDF metadata in the database
+    const pdfFile = await PdfFile.create({
+      date: new Date(date),
+      path: req.file.originalname, // Store the original name or path as necessary
     });
-  });
+
+    res.status(200).json({
+      message: 'File uploaded successfully',
+      file: pdfFile,
+    });
+  } catch (error) {
+    console.error('Error saving PDF file:', error);
+    res.status(500).json({ message: 'Error saving PDF file' });
+  }
+});
+app.get('/api/pdfs', async (req, res) => {
+  try {
+    const pdfs = await PdfFile.findAll();
+    res.json(pdfs);
+  } catch (error) {
+    console.error('Error retrieving PDFs:', error);
+    res.status(500).json({ message: 'Error retrieving PDFs' });
+  }
 });
 
 app.post('/api/add-publication', verifyToken, (req, res) => {
