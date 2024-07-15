@@ -238,7 +238,7 @@ app.get('/api/newspapers', async (req, res) => {
 });
 app.use('/api/admin', verifyToken);
 
-app.post('/upload', upload.single('pdf'), async (req, res) => {
+app.post('/api/upload', upload.single('pdf'), async (req, res) => {
   const { newspaperId, date } = req.body;
   const filePath = path.join('uploads', req.file.filename);
 
