@@ -9,7 +9,7 @@ import multer from 'multer';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import { Sequelize, DataTypes } from 'sequelize';
-import { Pool } from 'pg';
+import pg from 'pg';
 
 console.log('Server starting...');
 const sequelize = new Sequelize('newspapers_db', 'newspapers_db_user', 'L9iunDPwM3D9EUElE9YQ64bXb1dJbKt2', {
@@ -43,7 +43,7 @@ sequelize.sync();
 const SECRET_KEY = 'ewgwegegwegegegqwfqwfwhuohp;wfhjipwhfwfwldfuqwfwfwwqfwf';
 const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'password';
-
+const { Pool } = pg;
 const app = express();
 
 app.use(bodyParser.json());
