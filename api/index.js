@@ -238,27 +238,29 @@ app.get('/api/newspapers', async (req, res) => {
 });
 app.use('/api/admin', verifyToken);
 
-app.post('/api/upload', upload.single('pdf'), async (req, res) => {
-  const { newspaperId, date } = req.body;
-  const filePath = path.join('uploads', req.file.filename);
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+  if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+  }
+
+  const { name, date } = req.body;
+  const fileBuffer = req.file.buffer; // Buffer of the uploaded file
+  const fileName = req.file.originalname; // Original file name
 
   try {
+      // Save file information to PostgreSQL
       const result = await pool.query(
-          'INSERT INTO pdf_files (newspaper_id, date, path) VALUES ($1, $2, $3) RETURNING id',
-          [newspaperId, date, filePath]
+          'INSERT INTO PdfFiles (name, date, file_name, file_data) VALUES ($1, $2, $3, $4) RETURNING id',
+          [name, date, fileName, fileBuffer]
       );
-      res.status(201).json({ id: result.rows[0].id });
+
+      res.status(201).json({
+          message: 'File uploaded and saved to database successfully',
+          fileId: result.rows[0].id,
+      });
   } catch (error) {
-      res.status(500).json({ error: 'Error saving PDF to database' });
-  }
-});
-app.get('/api/pdfs', async (req, res) => {
-  try {
-    const pdfs = await PdfFile.findAll();
-    res.json(pdfs);
-  } catch (error) {
-    console.error('Error retrieving PDFs:', error);
-    res.status(500).json({ message: 'Error retrieving PDFs' });
+      console.error('Error saving file to database:', error);
+      res.status(500).json({ error: 'Failed to save file to database' });
   }
 });
 
