@@ -222,20 +222,20 @@ app.delete('/api/jobs/:id', (req, res) => {
 //     }
 //   });
 // });
-app.get('/api/newspapers', async (req, res) => {
-  try {
-      const result = await pool.query(`
-          SELECT n.id, n.name, n.type, n.imageUrl, n.language, 
-                 json_agg(json_build_object('date', p.date, 'path', p.path)) AS pdfFiles
-          FROM newspapers n
-          LEFT JOIN pdf_files p ON n.id = p.newspaper_id
-          GROUP BY n.id
-      `);
-      res.json(result.rows);
-  } catch (error) {
-      res.status(500).json({ error: 'Error fetching newspapers from database' });
-  }
-});
+// app.get('/api/newspapers', async (req, res) => {
+//   try {
+//       const result = await pool.query(`
+//           SELECT n.id, n.name, n.type, n.imageUrl, n.language, 
+//                  json_agg(json_build_object('date', p.date, 'path', p.path)) AS pdfFiles
+//           FROM newspapers n
+//           LEFT JOIN pdf_files p ON n.id = p.newspaper_id
+//           GROUP BY n.id
+//       `);
+//       res.json(result.rows);
+//   } catch (error) {
+//       res.status(500).json({ error: 'Error fetching newspapers from database' });
+//   }
+// });
 app.use('/api/admin', verifyToken);
 
 app.post('/api/upload', upload.single('file'), async (req, res) => {
