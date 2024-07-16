@@ -203,25 +203,25 @@ app.delete('/api/jobs/:id', (req, res) => {
 });
 
 
-// app.get('/api/newspapers', (req, res) => {
-//   const filePath = path.join(__dirname, 'newspapers.json');
+app.get('/api/newspapers', (req, res) => {
+  const filePath = path.join(__dirname, 'newspapers.json');
 
-//   // Read the JSON file and send it as response
-//   fs.readFile(filePath, 'utf8', (err, data) => {
-//     if (err) {
-//       console.error('Error reading file:', err);
-//       return res.status(500).json({ error: 'Internal Server Error' });
-//     }
+  // Read the JSON file and send it as response
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
 
-//     try {
-//       const newspapers = JSON.parse(data);
-//       res.json(newspapers);
-//     } catch (parseError) {
-//       console.error('Error parsing JSON:', parseError);
-//       res.status(500).json({ error: 'Internal Server Error' });
-//     }
-//   });
-// });
+    try {
+      const newspapers = JSON.parse(data);
+      res.json(newspapers);
+    } catch (parseError) {
+      console.error('Error parsing JSON:', parseError);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+});
 // app.get('/api/newspapers', async (req, res) => {
 //   try {
 //       const result = await pool.query(`
