@@ -137,7 +137,7 @@ const Newsworld: React.FC = () => {
             <p className="text-center text-lg col-span-full text-gray-600 dark:text-gray-400">No news available at the moment.</p>
           )}
         </div>
-        <div className="flex justify-center mt-8 space-x-4">
+        {/* <div className="flex justify-center mt-8 space-x-4">
           <button
             className={`px-6 py-2 bg-blue-500 text-white rounded-md ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}
             onClick={prevPageHandler}
@@ -152,7 +152,7 @@ const Newsworld: React.FC = () => {
           >
             Next
           </button>
-        </div>
+        </div> */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {latestNews.length > 0 ? (
             latestNews.map((item, index) => (

@@ -220,6 +220,7 @@ const Pages = () => {
               <h1 className="text-4xl font-bold text-center z-[100] text-gray-900 dark:text-white mb-12 font-custom3">
                 Explore Newspapers & Magazines
               </h1>
+              <p className="flex justify-center font-custom3 mb-12 text-lg dark:text-yellow-500 text-slate-900">Stay updated with the latest news & stay one step ahead! </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {/* Filter by Type */}
