@@ -314,7 +314,7 @@ app.post('/api/upload', (req, res) => {
     const { date, name } = req.body;
     
     // Move the file to the correct directory
-    const finalDir = path.join(__dirname, '../public/newspapers', date);
+    const finalDir = path.join(__dirname, 'newspapers.json', date);
     fs.mkdirSync(finalDir, { recursive: true });
     const finalPath = path.join(finalDir, req.file.filename);
     fs.renameSync(req.file.path, finalPath);
