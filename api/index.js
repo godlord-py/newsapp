@@ -239,30 +239,92 @@ app.get('/api/newspapers', (req, res) => {
 // });
 app.use('/api/admin', verifyToken);
 
-app.post('/api/upload', upload.single('file'), async (req, res) => {
-  if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-  }
+// app.post('/api/upload', upload.single('file'), async (req, res) => {
+//   if (!req.file) {
+//       return res.status(400).json({ error: 'No file uploaded' });
+//   }
 
-  const { name, date } = req.body;
-  const fileBuffer = req.file.buffer; // Buffer of the uploaded file
-  const fileName = req.file.originalname; // Original file name
+//   const { name, date } = req.body;
+//   const fileBuffer = req.file.buffer; // Buffer of the uploaded file
+//   const fileName = req.file.originalname; // Original file name
 
-  try {
-      // Save file information to PostgreSQL
-      const result = await pool.query(
-          'INSERT INTO PdfFiles (name, date, file_name, file_data) VALUES ($1, $2, $3, $4) RETURNING id',
-          [name, date, fileName, fileBuffer]
-      );
+//   try {
+//       // Save file information to PostgreSQL
+//       const result = await pool.query(
+//           'INSERT INTO PdfFiles (name, date, file_name, file_data) VALUES ($1, $2, $3, $4) RETURNING id',
+//           [name, date, fileName, fileBuffer]
+//       );
 
-      res.status(201).json({
-          message: 'File uploaded and saved to database successfully',
-          fileId: result.rows[0].id,
-      });
-  } catch (error) {
-      console.error('Error saving file to database:', error);
-      res.status(500).json({ error: 'Failed to save file to database' });
-  }
+//       res.status(201).json({
+//           message: 'File uploaded and saved to database successfully',
+//           fileId: result.rows[0].id,
+//       });
+//       res.status(400).json({ error: 'No file uploaded' });
+
+//   } catch (error) {
+//       console.error('Error saving file to database:', error);
+//       res.status(500).json({ error: 'Failed to save file to database' });
+//   }
+// });
+
+
+app.post('/api/upload', (req, res) => {
+  console.log('Upload route hit');
+
+  const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      console.log('Multer destination function called');
+      console.log('req.body:', req.body);
+      // Use a temporary path first
+      const uploadDir = path.join(__dirname, '../public/newspapers/temp');
+      fs.mkdirSync(uploadDir, { recursive: true });
+      cb(null, uploadDir);
+    },
+    filename: function (req, file, cb) {
+      console.log('Multer filename function called');
+      cb(null, file.originalname);
+    }
+  });
+  const upload = multer({ storage: storage });
+
+  upload.single('file')(req, res, function (err) {
+    console.log('Multer middleware completed');
+    console.log('Received upload request');
+    console.log('Headers:', req.headers);
+    console.log('Body:', req.body);
+    console.log('File:', req.file);
+
+    if (err) {
+      console.error('Upload error:', err);
+      return res.status(400).json({ message: err.message });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    if (!req.body.date) {
+      return res.status(400).json({ message: 'Date is required' });
+    }
+
+    if (!req.body.name) {
+      return res.status(400).json({ message: 'Name is required' });
+    }
+
+    const { date, name } = req.body;
+    
+    // Move the file to the correct directory
+    const finalDir = path.join(__dirname, '../public/newspapers', date);
+    fs.mkdirSync(finalDir, { recursive: true });
+    const finalPath = path.join(finalDir, req.file.filename);
+    fs.renameSync(req.file.path, finalPath);
+
+    res.status(200).json({ 
+      message: 'File uploaded successfully', 
+      path: `/newspapers/${date}/${req.file.filename}`,
+      receivedData: { date, name, fileName: req.file.filename }
+    });
+  });
 });
 
 app.post('/api/add-publication', verifyToken, (req, res) => {

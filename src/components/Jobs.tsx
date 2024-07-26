@@ -71,7 +71,7 @@ const JobsLayout = () => {
               />
             ))
           ) : (
-            <p className="text-center col-span-3">No jobs found.</p>
+            <p className="text-center col-span-3 text-6xl">No jobs found.</p>
           )}
           <div className="blurdownjobs"></div>
         </div>
