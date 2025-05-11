@@ -16,7 +16,7 @@ const FirstPage = () => {
           #DAILY NEWS
         </p>
         <div
-          className="p-3 font-bold mt-10 text-green-900 dark:text-red-600 text-6xl absolute    hbnjnh v"
+          className="p-3 font-bold mt-10 text-green-900 dark:text-red-600 text-6xl absolute"
           style={{ top: "28%", left: "13%", transform: "translate(-15%, -30%)" }}
         >
           <h1

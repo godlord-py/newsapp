@@ -12,8 +12,8 @@ import { Sequelize, DataTypes } from 'sequelize';
 import pg from 'pg';
 
 console.log('Server starting...');
-const sequelize = new Sequelize('newspapers_db', 'newspapers_db_user', 'L9iunDPwM3D9EUElE9YQ64bXb1dJbKt2', {
-  host: 'singapore-postgres.render.com',
+const sequelize = new Sequelize('newspapers_db_4aas', 'newspapers_db_4aas_user', 'wXHBQH8hOa6OKoCLOC4ahKZhftDdf30T', {
+  host: 'dpg-d0g56sadbo4c73b1ev5g-a.singapore-postgres.render.com',
   dialect: 'postgres',
   port: 5432, 
   dialectOptions: {
@@ -51,10 +51,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 const pool = new Pool({
-  user: 'newspapers_db_user',
-  host: 'singapore-postgres.render.com',
-  database: 'newspapers_db',
-  password: 'L9iunDPwM3D9EUElE9YQ64bXb1dJbKt2',
+  user: 'newspapers_db_4aas_user',
+  host: 'dpg-d0g56sadbo4c73b1ev5g-a.singapore-postgres.render.com',
+  database: 'newspapers_db_4aas',
+  password: 'wXHBQH8hOa6OKoCLOC4ahKZhftDdf30T',
   port: 5432,
 });
 
@@ -99,7 +99,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const newspapersFilePath = path.join(__dirname,  'newspapers.json');
-const jobsFilePath = path.join(__dirname, 'jobs.json');
+const jobsFilePath = path.join(__dirname, 'jo~~bs.json');
 const storage = multer.memoryStorage(); // Use memory storage
 const upload = multer({ storage: storage });
 
