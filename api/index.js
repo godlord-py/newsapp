@@ -12,8 +12,8 @@ import { Sequelize, DataTypes } from 'sequelize';
 import pg from 'pg';
 
 console.log('Server starting...');
-const sequelize = new Sequelize('newspapers_db_4aas', 'newspapers_db_4aas_user', 'wXHBQH8hOa6OKoCLOC4ahKZhftDdf30T', {
-  host: 'dpg-d0g56sadbo4c73b1ev5g-a.singapore-postgres.render.com',
+const sequelize = new Sequelize('news_db_r1km', 'news_db_r1km_user', '1B43R1ry6C4hjkFc0ZM6ETFaPmqsaYJw', {
+  host: 'dpg-d7l6l7hj2pic73clbcfg-a.singapore-postgres.render.com',
   dialect: 'postgres',
   port: 5432, 
   dialectOptions: {
