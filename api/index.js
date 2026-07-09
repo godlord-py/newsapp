@@ -25,7 +25,7 @@ const sequelize = new Sequelize('news_db_make_796d', 'news_db_make_user', '3Jh3o
 });
 
 const PdfFile = sequelize.define('PdfFile', {
-  date: {
+  date: {   
     type: DataTypes.DATE,
     allowNull: false,
   },
@@ -45,6 +45,7 @@ const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'password';
 const { Pool } = pg;
 const app = express();
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
